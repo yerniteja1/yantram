@@ -179,7 +179,7 @@ function InquiryForm() {
     const body = encodeURIComponent(
       `Name: ${name.trim()}\nEmail: ${email.trim()}\nProject type: ${type}\n\n${message.trim()}`
     );
-    window.location.href = `mailto:hello@yantramstudio.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:yerniteja1@gmail.com?subject=${subject}&body=${body}`;
     setSent(true);
   };
 
@@ -194,7 +194,7 @@ function InquiryForm() {
         </h3>
         <p className="mx-auto mb-4 max-w-md text-[14px] text-[#4F4A43]">
           We pre-filled everything — just hit send. Prefer to write directly?
-          Use <span className="font-medium text-[#161412]">hello@yantramstudio.com</span>.
+          Use <span className="font-medium text-[#161412]">yerniteja1@gmail.com</span>.
         </p>
         <button
           onClick={() => setSent(false)}
@@ -320,7 +320,7 @@ export default function Home() {
   };
   const copyEmail = async () => {
     try {
-      await navigator.clipboard.writeText("hello@yantramstudio.com");
+      await navigator.clipboard.writeText("yerniteja1@gmail.com");
     } catch {}
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -747,7 +747,15 @@ export default function Home() {
                 </button>
               </div>
               <p className="text-[13px] text-stone-600">
-                Direct studio desk: <span className="font-medium text-[#161412]">hello@yantramstudio.com</span> • Typical response within 24 hours
+                Direct:{" "}
+                <a href="mailto:yerniteja1@gmail.com" className="font-medium text-[#161412] underline-offset-4 hover:underline">
+                  yerniteja1@gmail.com
+                </a>{" "}
+                •{" "}
+                <a href="tel:+917981154679" className="font-medium text-[#161412] underline-offset-4 hover:underline">
+                  +91 79811 54679
+                </a>{" "}
+                • Typical response within 24 hours
               </p>
             </div>
             </Reveal>
@@ -764,6 +772,15 @@ export default function Home() {
             <div className="flex flex-col gap-1">
               <span className="font-display text-[20px] font-bold tracking-tight text-[#161412]">Yantram Studio</span>
               <p className="max-w-sm text-[13px] text-[#4F4A43]">A warm sanctuary shaping digital artifacts with architectural patience and intentional craft.</p>
+              <p className="text-[13px] text-[#4F4A43]">
+                <a href="mailto:yerniteja1@gmail.com" className="underline-offset-4 hover:text-[#161412] hover:underline">
+                  yerniteja1@gmail.com
+                </a>{" "}
+                •{" "}
+                <a href="tel:+917981154679" className="underline-offset-4 hover:text-[#161412] hover:underline">
+                  +91 79811 54679
+                </a>
+              </p>
             </div>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-8">
