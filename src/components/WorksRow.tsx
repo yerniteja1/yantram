@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
+import Icon from "@/components/Icon";
 import { Reveal } from "@/components/Reveal";
 
 const WORKS = [
@@ -54,7 +55,7 @@ export default function WorksRow() {
         </div>
         <a href="#contact-studio" className="group inline-flex items-center gap-2 text-[14px] font-semibold text-[#161412] transition-colors hover:text-amber-700">
           <span>Request Case Archive</span>
-          <span className="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-1">east</span>
+                <Icon name="arrow-right" className="text-[18px] transition-transform group-hover:translate-x-1" />
         </a>
       </Reveal>
       <Reveal>
@@ -95,10 +96,8 @@ export default function WorksRow() {
                     href="#contact-studio"
                     className={`inline-flex items-center gap-2 text-[14px] font-semibold text-[#161412] transition-colors ${w.linkHover}`}
                   >
-                    <span>View Case Study</span>
-                    <span className="material-symbols-outlined text-[18px] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
-                      north_east
-                    </span>
+                      <span>View Case Study</span>
+                      <Icon name="arrow-up-right" className="text-[18px] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </a>
                 </div>
               </article>
@@ -110,14 +109,14 @@ export default function WorksRow() {
               aria-label="Scroll works left"
               className="flex h-11 w-11 items-center justify-center rounded-full border border-stone-200 bg-white text-[#161412] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-amber-400 hover:shadow-md active:translate-y-0 active:scale-95"
             >
-              <span className="material-symbols-outlined text-xl">arrow_back</span>
+              <Icon name="arrow-left" className="text-xl" />
             </button>
             <button
               onClick={() => scrollWorks(1)}
               aria-label="Scroll works right"
               className="flex h-11 w-11 items-center justify-center rounded-full border border-stone-200 bg-white text-[#161412] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-amber-400 hover:shadow-md active:translate-y-0 active:scale-95"
             >
-              <span className="material-symbols-outlined text-xl">arrow_forward</span>
+              <Icon name="arrow-right" className="text-xl" />
             </button>
           </div>
         </div>

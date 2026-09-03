@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { NAV } from "@/lib/site";
+import Icon from "@/components/Icon";
 import LogoImage from "@/components/LogoImage";
 
 export default function SiteHeader() {
@@ -48,7 +49,7 @@ export default function SiteHeader() {
           showTop ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
         }`}
       >
-        <span className="material-symbols-outlined text-xl">arrow_upward</span>
+        <Icon name="arrow-up" className="text-xl" />
       </button>
 
       <header
@@ -84,7 +85,7 @@ export default function SiteHeader() {
           <div className="flex items-center gap-3">
             <a href="#contact-studio" className="hidden items-center gap-2 rounded-full bg-[#161412] px-6 py-2.5 text-[14px] font-semibold text-white shadow-[0_4px_16px_rgba(22,20,18,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-stone-800 hover:shadow-[0_6px_24px_rgba(22,20,18,0.2)] sm:inline-flex">
               <span>Start a Project</span>
-              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+              <Icon name="arrow-right" className="text-[18px]" />
             </a>
             <button
               onClick={() => setMenuOpen((o) => !o)}
@@ -92,7 +93,7 @@ export default function SiteHeader() {
               aria-expanded={menuOpen}
               className="flex h-10 w-10 items-center justify-center rounded-full border border-stone-200 bg-white text-[#161412] shadow-sm transition-colors hover:border-stone-300 lg:hidden"
             >
-              <span className="material-symbols-outlined text-[22px]">{menuOpen ? "close" : "menu"}</span>
+              <Icon name={menuOpen ? "close" : "menu"} className="text-[22px]" />
             </button>
           </div>
         </div>
@@ -112,7 +113,7 @@ export default function SiteHeader() {
                 }`}
               >
                 <span>{l.label}</span>
-                <span className="material-symbols-outlined text-[18px] text-stone-400">arrow_forward</span>
+                <Icon name="arrow-right" className="text-[18px] text-stone-400" />
               </a>
             ))}
             <a
@@ -121,7 +122,7 @@ export default function SiteHeader() {
               className="mt-4 flex items-center justify-center gap-2 rounded-full bg-[#161412] px-6 py-3 text-[14px] font-semibold text-white sm:hidden"
             >
               <span>Start a Project</span>
-              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+              <Icon name="arrow-right" className="text-[18px]" />
             </a>
           </nav>
         )}

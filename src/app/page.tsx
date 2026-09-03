@@ -1,6 +1,7 @@
 import Image from "next/image";
 import BotanicalCanvas from "@/components/BotanicalCanvas";
 import CountUp from "@/components/CountUp";
+import Icon from "@/components/Icon";
 import InquiryForm, { CopyEmailButton } from "@/components/InquiryForm";
 import LogoImage from "@/components/LogoImage";
 import SiteHeader from "@/components/SiteHeader";
@@ -24,14 +25,14 @@ const MARQUEE = [
 ];
 
 const METRICS = [
-  { icon: "schedule", bg: "bg-amber-50 border-amber-200/60 text-amber-700", value: 3, decimals: 0, suffix: "x Faster", sub: "Time-to-market without cutting corners" },
-  { icon: "verified_user", bg: "bg-emerald-50 border-emerald-200/60 text-emerald-800", value: 99.9, decimals: 1, suffix: "%", sub: "Production reliability and calm scale" },
-  { icon: "handshake", bg: "bg-stone-100 border-stone-200 text-stone-800", value: 100, decimals: 0, suffix: "%", sub: "Direct partnership with lead artisans" },
-];
+  { icon: "clock", bg: "bg-amber-50 border-amber-200/60 text-amber-700", value: 3, decimals: 0, suffix: "x Faster", sub: "Time-to-market without cutting corners" },
+  { icon: "shield-check", bg: "bg-emerald-50 border-emerald-200/60 text-emerald-800", value: 99.9, decimals: 1, suffix: "%", sub: "Production reliability and calm scale" },
+  { icon: "users", bg: "bg-stone-100 border-stone-200 text-stone-800", value: 100, decimals: 0, suffix: "%", sub: "Direct partnership with lead artisans" },
+] as const;
 
 const CAPABILITIES = [
   {
-    icon: "tab",
+    icon: "monitor",
     chip: "Fluid & Immersive",
     title: "Web Experiences",
     desc: "Editorial-grade digital spaces with rich micro-motion, lightning response, and effortless typography.",
@@ -49,7 +50,7 @@ const CAPABILITIES = [
     iconBg: "bg-emerald-50 border-emerald-200/60 text-emerald-700",
   },
   {
-    icon: "hub",
+    icon: "network",
     chip: "Calm Scale",
     title: "Cloud & Infrastructure",
     desc: "Distributed systems engineered like stone foundations: quiet, self-healing, and effortlessly scalable to millions.",
@@ -58,7 +59,7 @@ const CAPABILITIES = [
     iconBg: "bg-stone-100 border-stone-200 text-stone-800",
   },
   {
-    icon: "auto_fix_high",
+    icon: "sparkles",
     chip: "Harmonic Utility",
     title: "Intelligent Assistance",
     desc: "Practical ambient intelligence woven softly into workflows, eliminating repetitive friction without sterile gimmickry.",
@@ -66,21 +67,21 @@ const CAPABILITIES = [
     hover: "group-hover:text-amber-700",
     iconBg: "bg-amber-50 border-amber-200/60 text-amber-700",
   },
-];
+] as const;
 
 const STEPS = [
-  { n: "1", icon: "potted_plant", title: "Seed", sub: "Discover & Listen", subCls: "text-amber-700", desc: "We uncover your strategic essence, customer behavior, and product objectives before drafting a single pixel.", numBg: "bg-amber-50 border-amber-200 text-amber-700", hoverBorder: "hover:border-amber-400", iconHover: "group-hover:text-amber-700", foot: "text-amber-700", footIcon: "arrow_forward" },
-  { n: "2", icon: "polyline", title: "Shape", sub: "Design & Prototype", subCls: "text-emerald-800", desc: "Interactive high-fidelity prototypes you can touch, test, and feel in your hand early in the process.", numBg: "bg-emerald-50 border-emerald-200 text-emerald-800", hoverBorder: "hover:border-emerald-500", iconHover: "group-hover:text-emerald-700", foot: "text-emerald-800", footIcon: "arrow_forward" },
-  { n: "3", icon: "construction", title: "Build", sub: "Craft & Test", subCls: "text-stone-700", desc: "Clean architectural code built to endure. Thorough unit tests, performance audits, and human-tested ergonomics.", numBg: "bg-stone-100 border-stone-200 text-stone-800", hoverBorder: "hover:border-stone-400", iconHover: "group-hover:text-stone-800", foot: "text-stone-700", footIcon: "arrow_forward" },
-  { n: "4", icon: "eco", title: "Flourish", sub: "Launch & Scale", subCls: "text-amber-700", desc: "Smooth deployment, clear handover docs, and ongoing observation to guide continuous market growth.", numBg: "bg-amber-50 border-amber-200 text-amber-700", hoverBorder: "hover:border-amber-400", iconHover: "group-hover:text-amber-700", foot: "text-amber-700", footIcon: "check_circle" },
-];
+  { n: "1", icon: "seedling", title: "Seed", sub: "Discover & Listen", subCls: "text-amber-700", desc: "We uncover your strategic essence, customer behavior, and product objectives before drafting a single pixel.", numBg: "bg-amber-50 border-amber-200 text-amber-700", hoverBorder: "hover:border-amber-400", iconHover: "group-hover:text-amber-700", foot: "text-amber-700", footIcon: "arrow-right" },
+  { n: "2", icon: "spline", title: "Shape", sub: "Design & Prototype", subCls: "text-emerald-800", desc: "Interactive high-fidelity prototypes you can touch, test, and feel in your hand early in the process.", numBg: "bg-emerald-50 border-emerald-200 text-emerald-800", hoverBorder: "hover:border-emerald-500", iconHover: "group-hover:text-emerald-700", foot: "text-emerald-800", footIcon: "arrow-right" },
+  { n: "3", icon: "code", title: "Build", sub: "Craft & Test", subCls: "text-stone-700", desc: "Clean architectural code built to endure. Thorough unit tests, performance audits, and human-tested ergonomics.", numBg: "bg-stone-100 border-stone-200 text-stone-800", hoverBorder: "hover:border-stone-400", iconHover: "group-hover:text-stone-800", foot: "text-stone-700", footIcon: "arrow-right" },
+  { n: "4", icon: "leaf", title: "Flourish", sub: "Launch & Scale", subCls: "text-amber-700", desc: "Smooth deployment, clear handover docs, and ongoing observation to guide continuous market growth.", numBg: "bg-amber-50 border-amber-200 text-amber-700", hoverBorder: "hover:border-amber-400", iconHover: "group-hover:text-amber-700", foot: "text-amber-700", footIcon: "check-circle" },
+] as const;
 
 const VALUES = [
-  { icon: "groups", color: "text-amber-700", title: "Direct Access", desc: "Talk directly with the artisans building your product. No account managers acting as games of telephone." },
-  { icon: "translate", color: "text-emerald-800", title: "Human Clarity", desc: "No bewildering acronyms or smoke-and-mirrors jargon. We explain trade-offs plainly so you can decide with confidence." },
-  { icon: "calendar_today", color: "text-stone-800", title: "Transparent Milestones", desc: "Every stage has a documented heartbeat and delivery schedule. You know exactly what is blooming each week." },
-  { icon: "favorite", color: "text-amber-700", title: "Long-term Care", desc: "We stand by what we construct. Post-launch support and architectural mentorship ensure your software thrives." },
-];
+  { icon: "users", color: "text-amber-700", title: "Direct Access", desc: "Talk directly with the artisans building your product. No account managers acting as games of telephone." },
+  { icon: "languages", color: "text-emerald-800", title: "Human Clarity", desc: "No bewildering acronyms or smoke-and-mirrors jargon. We explain trade-offs plainly so you can decide with confidence." },
+  { icon: "calendar", color: "text-stone-800", title: "Transparent Milestones", desc: "Every stage has a documented heartbeat and delivery schedule. You know exactly what is blooming each week." },
+  { icon: "heart", color: "text-amber-700", title: "Long-term Care", desc: "We stand by what we construct. Post-launch support and architectural mentorship ensure your software thrives." },
+] as const;
 
 export default function Home() {
   return (
@@ -100,7 +101,7 @@ export default function Home() {
         </span>
         <span className="text-[11px] font-semibold uppercase tracking-wider text-stone-700">Botanical Flux: Active</span>
         <span className="text-[10px] text-stone-500">|</span>
-        <span className="material-symbols-outlined text-[15px] text-stone-600">eco</span>
+        <Icon name="leaf" className="text-[15px] text-stone-600" />
       </div>
 
       <SiteHeader />
@@ -144,11 +145,11 @@ export default function Home() {
               >
                 <a href="#contact-studio" className="inline-flex items-center gap-2 rounded-full bg-[#161412] px-8 py-3 text-[14px] font-semibold text-white shadow-[0_6px_20px_rgba(22,20,18,0.14)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-stone-800 hover:shadow-[0_10px_30px_rgba(22,20,18,0.22)] active:translate-y-0 active:scale-[0.98]">
                   <span>Start a Project</span>
-                  <span className="material-symbols-outlined text-[18px]">north_east</span>
+                  <Icon name="arrow-up-right" className="text-[18px]" />
                 </a>
                 <a href="#selected-works" className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-8 py-3 text-[14px] font-semibold text-[#161412] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-stone-300 hover:bg-stone-50 active:translate-y-0 active:scale-[0.98]">
                   <span>Explore Works</span>
-                  <span className="material-symbols-outlined text-[18px]">arrow_downward</span>
+                  <Icon name="arrow-down" className="text-[18px]" />
                 </a>
               </div>
               <Stagger className="grid w-full max-w-4xl grid-cols-1 gap-4 pt-6 sm:grid-cols-3">
@@ -156,7 +157,7 @@ export default function Home() {
                   <StaggerItem key={m.sub} delay={idx * 0.08}>
                     <div className="flex items-center gap-4 rounded-xl border border-stone-200/80 bg-white p-6 text-left shadow-[0_4px_16px_rgba(22,20,18,0.03)] transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
                       <div className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl border transition-transform duration-300 hover:scale-110 ${m.bg}`}>
-                        <span className="material-symbols-outlined text-2xl">{m.icon}</span>
+                        <Icon name={m.icon} className="text-2xl" />
                       </div>
                       <div className="flex flex-col">
                         <CountUp
@@ -205,7 +206,7 @@ export default function Home() {
                 <div className="group flex h-full flex-col justify-between rounded-2xl border border-stone-200/80 bg-white p-8 shadow-[0_4px_20px_rgba(22,20,18,0.03)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(22,20,18,0.07)]">
                   <div className="mb-6 flex items-center justify-between">
                     <div className={`flex h-12 w-12 items-center justify-center rounded-xl border ${c.iconBg}`}>
-                      <span className="material-symbols-outlined text-2xl">{c.icon}</span>
+                      <Icon name={c.icon} className="text-2xl" />
                     </div>
                     <span className="rounded-full border border-stone-200/70 bg-stone-100 px-3 py-1 text-[11px] font-semibold tracking-wide text-stone-700">{c.chip}</span>
                   </div>
@@ -246,7 +247,7 @@ export default function Home() {
           <section id="ethos" className="relative my-8 w-full scroll-mt-24 overflow-hidden border-y border-stone-200/90 bg-[#F5F2EC] py-24">
             <Reveal className="relative z-10 mx-auto max-w-5xl px-5 text-center md:px-14">
               <div className="mb-4 inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-wider text-emerald-800">
-                <span className="material-symbols-outlined text-[18px]">spa</span>
+                <Icon name="flower" className="text-[18px]" />
                 <span>Atelier Ethos</span>
               </div>
               <h2 className="font-display mb-6 text-[28px] font-bold tracking-tight text-[#161412] md:text-[40px] md:leading-[48px]">
@@ -280,14 +281,14 @@ export default function Home() {
                   <div>
                     <div className="mb-4 flex items-center justify-between">
                       <span className={`flex h-8 w-8 items-center justify-center rounded-full border text-[20px] font-bold ${s.numBg}`}>{s.n}</span>
-                      <span className={`material-symbols-outlined text-stone-400 transition-colors ${s.iconHover}`}>{s.icon}</span>
+                      <Icon name={s.icon} className={`text-stone-400 transition-colors ${s.iconHover}`} />
                     </div>
                     <h3 className="font-display mb-1 text-[20px] font-semibold leading-7 text-[#161412]">{s.title}</h3>
                     <p className={`mb-3 text-[14px] font-semibold ${s.subCls}`}>{s.sub}</p>
                     <p className="text-[13px] leading-5 text-[#4F4A43]">{s.desc}</p>
                   </div>
                   <div className={`flex items-center justify-end pt-4 ${s.foot}`}>
-                    <span className="material-symbols-outlined text-lg transition-transform duration-300 group-hover:translate-x-1">{s.footIcon}</span>
+                    <Icon name={s.footIcon} className="text-lg transition-transform duration-300 group-hover:translate-x-1" />
                   </div>
                 </div>
                 </StaggerItem>
@@ -308,7 +309,7 @@ export default function Home() {
                 {VALUES.map((v) => (
                   <div key={v.title} className="group flex flex-col gap-2 transition-transform duration-300 hover:-translate-y-1">
                     <div className={`mb-1 flex h-10 w-10 items-center justify-center rounded-xl border border-stone-200 bg-white shadow-sm transition-transform duration-300 group-hover:-translate-y-0.5 ${v.color}`}>
-                      <span className="material-symbols-outlined text-xl">{v.icon}</span>
+                      <Icon name={v.icon} className="text-xl" />
                     </div>
                     <h3 className="font-display text-[20px] font-semibold leading-7 text-[#161412]">{v.title}</h3>
                     <p className="text-[13px] leading-5 text-[#4F4A43]">{v.desc}</p>
@@ -326,7 +327,7 @@ export default function Home() {
               <div className="animate-glow pointer-events-none absolute -top-24 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-amber-100/50 blur-3xl" />
               <div className="animate-glow pointer-events-none absolute -bottom-24 right-10 h-80 w-80 rounded-full bg-emerald-100/40 blur-3xl" />
               <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-stone-200 bg-[#F5F2EC] text-[#161412] shadow-sm">
-                <span className="material-symbols-outlined text-3xl">mark_email_read</span>
+                <Icon name="mail" className="text-3xl" />
               </div>
               <span className="mb-2 text-[12px] font-semibold uppercase tracking-widest text-amber-700">Ready When You Are</span>
               <h2 className="font-display mb-4 max-w-2xl text-[28px] font-bold leading-9 text-[#161412] md:text-[40px] md:leading-[48px]">

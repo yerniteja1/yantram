@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Icon from "@/components/Icon";
 import { CONTACT_EMAIL } from "@/lib/site";
 
 const PROJECT_TYPES = [
@@ -31,7 +32,7 @@ export function CopyEmailButton() {
       onClick={copyEmail}
       className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-stone-100 px-6 py-3 text-[12px] font-semibold text-[#161412] transition-all duration-300 hover:-translate-y-0.5 hover:bg-stone-200 active:translate-y-0 active:scale-[0.98]"
     >
-      <span className="material-symbols-outlined text-[16px]">content_copy</span>
+      <Icon name="copy" className="text-[16px]" />
       <span>{copied ? "Copied to Clipboard!" : "Copy Email Address"}</span>
     </button>
   );
@@ -96,7 +97,7 @@ export default function InquiryForm() {
     return (
       <div className="mb-6 w-full max-w-2xl rounded-2xl border border-emerald-700/25 bg-emerald-50/60 p-8 text-center">
         <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-emerald-200 bg-white text-emerald-800">
-          <span className="material-symbols-outlined text-2xl">check_circle</span>
+          <Icon name="check-circle" className="text-2xl" />
         </div>
         <h3 className="font-display mb-1 text-[20px] font-semibold text-[#161412]">
           {sent === "direct" ? "Inquiry sent — thank you" : "Your email app should now be open"}
@@ -191,9 +192,7 @@ export default function InquiryForm() {
           className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#161412] px-8 py-3.5 text-[14px] font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-stone-800 active:translate-y-0 disabled:cursor-wait disabled:opacity-70 disabled:hover:translate-y-0 sm:w-auto"
         >
           <span>{sending ? "Sending…" : "Send Inquiry"}</span>
-          <span className="material-symbols-outlined text-[18px]">
-            {sending ? "hourglass_top" : "north_east"}
-          </span>
+          <Icon name="arrow-up-right" className="text-[18px]" />
         </button>
       </div>
     </form>
