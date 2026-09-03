@@ -43,9 +43,18 @@ export default function InquiryForm() {
   const [type, setType] = useState(PROJECT_TYPES[0]);
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState<null | "direct" | "email-app">(null);
 
-  const submit = (e: React.FormEvent) => {
+  const openEmailApp = () => {
+    const subject = encodeURIComponent(`Project inquiry from ${name.trim()} — ${type}`);
+    const body = encodeURIComponent(
+      `Name: ${name.trim()}\nEmail: ${email.trim()}\nProject type: ${type}\n\n${message.trim()}`
+    );
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+  };
+
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const errs: Record<string, string> = {};
     if (name.trim().length < 2) errs.name = "Please tell us your name.";
@@ -55,12 +64,32 @@ export default function InquiryForm() {
       errs.message = "A sentence or two about your project helps us prepare.";
     setErrors(errs);
     if (Object.keys(errs).length > 0) return;
-    const subject = encodeURIComponent(`Project inquiry from ${name.trim()} — ${type}`);
-    const body = encodeURIComponent(
-      `Name: ${name.trim()}\nEmail: ${email.trim()}\nProject type: ${type}\n\n${message.trim()}`
-    );
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
-    setSent(true);
+
+    // Try delivering directly to the studio inbox first (no backend needed).
+    setSending(true);
+    try {
+      const res = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          "project type": type,
+          message: message.trim(),
+          _subject: `Project inquiry from ${name.trim()} — ${type}`,
+          _template: "table",
+        }),
+      });
+      if (!res.ok) throw new Error("delivery failed");
+      setSent("direct");
+    } catch {
+      // No network / blocked request: fall back to the visitor's email app
+      // so the inquiry is never silently lost.
+      openEmailApp();
+      setSent("email-app");
+    } finally {
+      setSending(false);
+    }
   };
 
   if (sent) {
@@ -70,14 +99,24 @@ export default function InquiryForm() {
           <span className="material-symbols-outlined text-2xl">check_circle</span>
         </div>
         <h3 className="font-display mb-1 text-[20px] font-semibold text-[#161412]">
-          Your email app should now be open
+          {sent === "direct" ? "Inquiry sent — thank you" : "Your email app should now be open"}
         </h3>
         <p className="mx-auto mb-4 max-w-md text-[14px] text-[#4F4A43]">
-          We pre-filled everything — just hit send. Prefer to write directly?
-          Use <span className="font-medium text-[#161412]">{CONTACT_EMAIL}</span>.
+          {sent === "direct" ? (
+            <>
+              We&apos;ll reply to <span className="font-medium text-[#161412]">{email.trim()}</span> within
+              24 hours. Prefer to write directly? Use{" "}
+              <span className="font-medium text-[#161412]">{CONTACT_EMAIL}</span>.
+            </>
+          ) : (
+            <>
+              We pre-filled everything — just hit send. Prefer to write directly?
+              Use <span className="font-medium text-[#161412]">{CONTACT_EMAIL}</span>.
+            </>
+          )}
         </p>
         <button
-          onClick={() => setSent(false)}
+          onClick={() => setSent(null)}
           className="text-[13px] font-semibold text-emerald-800 underline underline-offset-4 hover:text-emerald-900"
         >
           Send another inquiry
@@ -148,10 +187,13 @@ export default function InquiryForm() {
       <div className="sm:col-span-2">
         <button
           type="submit"
-          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#161412] px-8 py-3.5 text-[14px] font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-stone-800 active:translate-y-0 sm:w-auto"
+          disabled={sending}
+          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#161412] px-8 py-3.5 text-[14px] font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-stone-800 active:translate-y-0 disabled:cursor-wait disabled:opacity-70 disabled:hover:translate-y-0 sm:w-auto"
         >
-          <span>Send Inquiry</span>
-          <span className="material-symbols-outlined text-[18px]">north_east</span>
+          <span>{sending ? "Sending…" : "Send Inquiry"}</span>
+          <span className="material-symbols-outlined text-[18px]">
+            {sending ? "hourglass_top" : "north_east"}
+          </span>
         </button>
       </div>
     </form>
