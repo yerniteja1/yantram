@@ -289,13 +289,14 @@ export default function BotanicalCanvas() {
     window.addEventListener("mousemove", onMove);
     document.addEventListener("visibilitychange", onVisibility);
 
+    let startTimer: number | undefined;
     if (reduced) {
       // static single frame — zero ongoing CPU cost
       drawFrame();
     } else {
       // defer ambient animation until after first paint so it never
       // competes with LCP / initial load on the main thread
-      var startTimer: number | undefined = window.setTimeout(start, 900);
+      startTimer = window.setTimeout(start, 900);
     }
 
     return () => {

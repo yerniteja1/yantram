@@ -1,10 +1,16 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import BotanicalCanvas from "@/components/BotanicalCanvas";
 import CountUp from "@/components/CountUp";
+import InquiryForm, { CopyEmailButton } from "@/components/InquiryForm";
+import LogoImage from "@/components/LogoImage";
+import SiteHeader from "@/components/SiteHeader";
+import WorksRow from "@/components/WorksRow";
 import { Reveal, Stagger, StaggerItem } from "@/components/Reveal";
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE_DISPLAY,
+  CONTACT_PHONE_HREF,
+} from "@/lib/site";
 
 const MARQUEE = [
   "Web Experiences",
@@ -15,14 +21,6 @@ const MARQUEE = [
   "MVP Sprints",
   "Brand Identity",
   "Long-term Care",
-];
-
-const NAV = [
-  { label: "Works", href: "#selected-works" },
-  { label: "Capabilities", href: "#capabilities" },
-  { label: "Philosophy", href: "#ethos" },
-  { label: "Process", href: "#process" },
-  { label: "Connect", href: "#contact-studio" },
 ];
 
 const METRICS = [
@@ -70,42 +68,6 @@ const CAPABILITIES = [
   },
 ];
 
-const WORKS = [
-  {
-    tags: [
-      { label: "Workflow Studio", cls: "bg-amber-50 border-amber-200/60 text-amber-800" },
-      { label: "Enterprise SaaS", cls: "bg-stone-100 border-stone-200/80 text-stone-700" },
-    ],
-    title: "Lumina — Intelligent Creative Orchestration",
-    desc: "Replaced 4 disconnected legacy tools with a single calm workspace for global design teams. Resulted in 42% reduced cycle times and zero training required for new team members.",
-    img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80&auto=format&fit=crop",
-    linkHover: "hover:text-amber-700",
-    reverse: false,
-  },
-  {
-    tags: [
-      { label: "Health & Wellness", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
-      { label: "Cross-Platform", cls: "bg-stone-100 border-stone-200/80 text-stone-700" },
-    ],
-    title: "Haven Health — Compassionate Care Coordination",
-    desc: "A patient-first platform designed to replace clinical anxiety with clarity. Built with HIPAA compliance, biometrics, and real-time practitioner consultations.",
-    img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80&auto=format&fit=crop",
-    linkHover: "hover:text-emerald-700",
-    reverse: true,
-  },
-  {
-    tags: [
-      { label: "Fintech & Commerce", cls: "bg-stone-100 border-stone-200/80 text-stone-800" },
-      { label: "Global Scale", cls: "bg-stone-100 border-stone-200/80 text-stone-700" },
-    ],
-    title: "Solis Pay — Effortless Borderless Commerce",
-    desc: "Empowering 18,000+ independent artisans and digital goods sellers across 34 currencies with a frictionless 1-click checkout experience.",
-    img: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80&auto=format&fit=crop",
-    linkHover: "hover:text-amber-700",
-    reverse: false,
-  },
-];
-
 const STEPS = [
   { n: "1", icon: "potted_plant", title: "Seed", sub: "Discover & Listen", subCls: "text-amber-700", desc: "We uncover your strategic essence, customer behavior, and product objectives before drafting a single pixel.", numBg: "bg-amber-50 border-amber-200 text-amber-700", hoverBorder: "hover:border-amber-400", iconHover: "group-hover:text-amber-700", foot: "text-amber-700", footIcon: "arrow_forward" },
   { n: "2", icon: "polyline", title: "Shape", sub: "Design & Prototype", subCls: "text-emerald-800", desc: "Interactive high-fidelity prototypes you can touch, test, and feel in your hand early in the process.", numBg: "bg-emerald-50 border-emerald-200 text-emerald-800", hoverBorder: "hover:border-emerald-500", iconHover: "group-hover:text-emerald-700", foot: "text-emerald-800", footIcon: "arrow_forward" },
@@ -120,212 +82,7 @@ const VALUES = [
   { icon: "favorite", color: "text-amber-700", title: "Long-term Care", desc: "We stand by what we construct. Post-launch support and architectural mentorship ensure your software thrives." },
 ];
 
-function LogoImage({
-  src,
-  alt,
-  size,
-  priority = false,
-}: {
-  src: string;
-  alt: string;
-  size: string;
-  priority?: boolean;
-}) {
-  return (
-    <Image
-      src={src}
-      alt={alt}
-      width={128}
-      height={128}
-      priority={priority}
-      className={`${size} object-contain`}
-    />
-  );
-}
-
-const PROJECT_TYPES = [
-  "New product from scratch",
-  "Redesign / revitalize",
-  "Mobile application",
-  "Cloud & infrastructure",
-  "Intelligent assistance / AI",
-  "Something else",
-];
-
-const inputCls =
-  "w-full rounded-lg border border-stone-200 bg-white px-4 py-3 text-[15px] text-[#161412] placeholder:text-stone-400 outline-none transition-colors focus:border-[#161412]";
-const labelCls =
-  "mb-1.5 block text-[12px] font-semibold uppercase tracking-wider text-stone-600";
-
-function InquiryForm() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [type, setType] = useState(PROJECT_TYPES[0]);
-  const [message, setMessage] = useState("");
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [sent, setSent] = useState(false);
-
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const errs: Record<string, string> = {};
-    if (name.trim().length < 2) errs.name = "Please tell us your name.";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
-      errs.email = "Please enter a valid email address.";
-    if (message.trim().length < 10)
-      errs.message = "A sentence or two about your project helps us prepare.";
-    setErrors(errs);
-    if (Object.keys(errs).length > 0) return;
-    const subject = encodeURIComponent(`Project inquiry from ${name.trim()} — ${type}`);
-    const body = encodeURIComponent(
-      `Name: ${name.trim()}\nEmail: ${email.trim()}\nProject type: ${type}\n\n${message.trim()}`
-    );
-    window.location.href = `mailto:yerniteja1@gmail.com?subject=${subject}&body=${body}`;
-    setSent(true);
-  };
-
-  if (sent) {
-    return (
-      <div className="mb-6 w-full max-w-2xl rounded-2xl border border-emerald-700/25 bg-emerald-50/60 p-8 text-center">
-        <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-emerald-200 bg-white text-emerald-800">
-          <span className="material-symbols-outlined text-2xl">check_circle</span>
-        </div>
-        <h3 className="font-display mb-1 text-[20px] font-semibold text-[#161412]">
-          Your email app should now be open
-        </h3>
-        <p className="mx-auto mb-4 max-w-md text-[14px] text-[#4F4A43]">
-          We pre-filled everything — just hit send. Prefer to write directly?
-          Use <span className="font-medium text-[#161412]">yerniteja1@gmail.com</span>.
-        </p>
-        <button
-          onClick={() => setSent(false)}
-          className="text-[13px] font-semibold text-emerald-800 underline underline-offset-4 hover:text-emerald-900"
-        >
-          Send another inquiry
-        </button>
-      </div>
-    );
-  }
-
-  return (
-    <form
-      onSubmit={submit}
-      noValidate
-      className="mb-6 grid w-full max-w-2xl grid-cols-1 gap-4 rounded-2xl border border-stone-200/90 bg-[#F5F2EC]/60 p-6 text-left sm:grid-cols-2 md:p-8"
-    >
-      <div>
-        <label htmlFor="inq-name" className={labelCls}>
-          Your name
-        </label>
-        <input
-          id="inq-name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Ava Rao"
-          autoComplete="name"
-          className={inputCls}
-        />
-        {errors.name && <p className="mt-1 text-[13px] text-red-700">{errors.name}</p>}
-      </div>
-      <div>
-        <label htmlFor="inq-email" className={labelCls}>
-          Email
-        </label>
-        <input
-          id="inq-email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="ava@company.com"
-          autoComplete="email"
-          className={inputCls}
-        />
-        {errors.email && <p className="mt-1 text-[13px] text-red-700">{errors.email}</p>}
-      </div>
-      <div className="sm:col-span-2">
-        <label htmlFor="inq-type" className={labelCls}>
-          Project type
-        </label>
-        <select id="inq-type" value={type} onChange={(e) => setType(e.target.value)} className={inputCls}>
-          {PROJECT_TYPES.map((t) => (
-            <option key={t}>{t}</option>
-          ))}
-        </select>
-      </div>
-      <div className="sm:col-span-2">
-        <label htmlFor="inq-message" className={labelCls}>
-          About your project
-        </label>
-        <textarea
-          id="inq-message"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="What are you building, and what does success look like?"
-          rows={4}
-          className={`${inputCls} resize-y`}
-        />
-        {errors.message && <p className="mt-1 text-[13px] text-red-700">{errors.message}</p>}
-      </div>
-      <div className="sm:col-span-2">
-        <button
-          type="submit"
-          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#161412] px-8 py-3.5 text-[14px] font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-stone-800 active:translate-y-0 sm:w-auto"
-        >
-          <span>Send Inquiry</span>
-          <span className="material-symbols-outlined text-[18px]">north_east</span>
-        </button>
-      </div>
-    </form>
-  );
-}
-
 export default function Home() {
-  const [copied, setCopied] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState("#selected-works");
-  const [showTop, setShowTop] = useState(false);
-  const worksRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 8);
-      setShowTop(window.scrollY > 700);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // scrollspy — highlight the nav link for the section in view
-  useEffect(() => {
-    const sections = NAV.map((l) => document.getElementById(l.href.slice(1))).filter(
-      (el): el is HTMLElement => el !== null
-    );
-    if (!sections.length) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) setActive(`#${e.target.id}`);
-        }
-      },
-      { rootMargin: "-40% 0px -55% 0px" }
-    );
-    sections.forEach((s) => io.observe(s));
-    return () => io.disconnect();
-  }, []);
-  const scrollWorks = (dir: 1 | -1) => {
-    const el = worksRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * el.clientWidth * 0.6, behavior: "smooth" });
-  };
-  const copyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText("yerniteja1@gmail.com");
-    } catch {}
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   return (
     <div className="relative min-h-screen bg-[#FBF9F6] font-[Space_Grotesk,Plus_Jakarta_Sans,sans-serif] text-[15px] leading-6 text-[#161412] antialiased">
       <a
@@ -335,17 +92,6 @@ export default function Home() {
         Skip to content
       </a>
       <BotanicalCanvas />
-
-      {/* back to top */}
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        aria-label="Back to top"
-        className={`fixed bottom-6 left-6 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-stone-200 bg-white text-[#161412] shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:border-amber-400 hover:shadow-lg ${
-          showTop ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
-        }`}
-      >
-        <span className="material-symbols-outlined text-xl">arrow_upward</span>
-      </button>
 
       <div className="animate-float fixed bottom-6 right-6 z-40 flex select-none items-center gap-2.5 rounded-full border border-stone-300/80 bg-white/90 px-3.5 py-1.5 text-[#4F4A43] shadow-[0_8px_24px_rgba(22,20,18,0.06)] backdrop-blur-md">
         <span className="relative flex h-2 w-2">
@@ -357,81 +103,7 @@ export default function Home() {
         <span className="material-symbols-outlined text-[15px] text-stone-600">eco</span>
       </div>
 
-      <header
-        className={`fixed left-0 right-0 top-0 z-50 w-full border-b backdrop-blur-xl transition-all duration-300 ${
-          scrolled
-            ? "border-stone-200 bg-[#FBF9F6]/95 shadow-[0_4px_20px_rgba(22,20,18,0.06)]"
-            : "border-stone-200/80 bg-[#FBF9F6]/85"
-        }`}
-      >
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 md:px-14">
-          <a href="#" className="group flex items-center gap-4" onClick={() => setMenuOpen(false)}>
-            <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-stone-200 bg-white p-1 shadow-sm transition-transform duration-300 group-hover:scale-105">
-              <LogoImage src="/apple-touch-icon.png" alt="Yantram Studio logo" size="h-7 w-7" priority />
-            </div>
-            <span className="font-display text-[20px] font-bold uppercase tracking-wider text-[#161412]">Yantram</span>
-          </a>
-          <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
-            {NAV.map((l) => (
-              <a
-                key={l.label}
-                href={l.href}
-                aria-current={active === l.href ? "true" : undefined}
-                className={`pb-0.5 text-[14px] transition-colors duration-200 ${
-                  active === l.href
-                    ? "border-b-2 border-[#161412] font-bold text-[#161412]"
-                    : "font-semibold text-[#4F4A43] hover:text-[#161412]"
-                }`}
-              >
-                {l.label}
-              </a>
-            ))}
-          </nav>
-          <div className="flex items-center gap-3">
-            <a href="#contact-studio" className="hidden items-center gap-2 rounded-full bg-[#161412] px-6 py-2.5 text-[14px] font-semibold text-white shadow-[0_4px_16px_rgba(22,20,18,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-stone-800 hover:shadow-[0_6px_24px_rgba(22,20,18,0.2)] sm:inline-flex">
-              <span>Start a Project</span>
-              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
-            </a>
-            <button
-              onClick={() => setMenuOpen((o) => !o)}
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
-              aria-expanded={menuOpen}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-stone-200 bg-white text-[#161412] shadow-sm transition-colors hover:border-stone-300 lg:hidden"
-            >
-              <span className="material-symbols-outlined text-[22px]">{menuOpen ? "close" : "menu"}</span>
-            </button>
-          </div>
-        </div>
-        {/* mobile menu */}
-        {menuOpen && (
-          <nav
-            className="border-t border-stone-200/80 bg-[#FBF9F6]/95 px-5 pb-6 pt-3 backdrop-blur-xl lg:hidden"
-            aria-label="Mobile"
-          >
-            {NAV.map((l) => (
-              <a
-                key={l.label}
-                href={l.href}
-                onClick={() => setMenuOpen(false)}
-                className={`flex items-center justify-between border-b border-stone-200/60 py-3.5 text-[15px] transition-colors ${
-                  active === l.href ? "font-bold text-[#161412]" : "font-medium text-[#4F4A43]"
-                }`}
-              >
-                <span>{l.label}</span>
-                <span className="material-symbols-outlined text-[18px] text-stone-400">arrow_forward</span>
-              </a>
-            ))}
-            <a
-              href="#contact-studio"
-              onClick={() => setMenuOpen(false)}
-              className="mt-4 flex items-center justify-center gap-2 rounded-full bg-[#161412] px-6 py-3 text-[14px] font-semibold text-white sm:hidden"
-            >
-              <span>Start a Project</span>
-              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
-            </a>
-          </nav>
-        )}
-      </header>
+      <SiteHeader />
 
       <main id="main" className="relative z-10 w-full pt-20">
         <div className="bg-atelier-mesh flex w-full flex-col">
@@ -592,83 +264,7 @@ export default function Home() {
           </section>
 
           {/* WORKS */}
-          <section id="selected-works" className="mx-auto w-full max-w-7xl scroll-mt-24 px-5 py-12 md:px-14">
-            <Reveal className="mb-12 flex flex-col justify-between gap-4 md:flex-row md:items-end">
-              <div>
-                <span className="text-[12px] font-semibold uppercase tracking-widest text-amber-700">Selected Work</span>
-                <h2 className="font-display mt-1 text-[28px] font-semibold leading-9 text-[#161412] md:text-[36px] md:leading-[44px]">Products built for founders who value detail.</h2>
-              </div>
-              <a href="#contact-studio" className="group inline-flex items-center gap-2 text-[14px] font-semibold text-[#161412] transition-colors hover:text-amber-700">
-                <span>Request Case Archive</span>
-                <span className="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-1">east</span>
-              </a>
-            </Reveal>
-            <Reveal>
-              <div className="relative">
-                <div
-                  ref={worksRef}
-                  className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-                >
-                  {WORKS.map((w) => (
-                    <article
-                      key={w.title}
-                      className="group w-[86vw] shrink-0 snap-center overflow-hidden rounded-2xl border border-stone-200/90 bg-white shadow-[0_6px_24px_rgba(22,20,18,0.04)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(22,20,18,0.08)] sm:w-[58vw] lg:w-[calc(50%-12px)]"
-                    >
-                      <div className="zoom-img relative h-60 w-full overflow-hidden bg-stone-100 sm:h-72">
-                        <Image
-                          alt={w.title}
-                          src={w.img}
-                          fill
-                          loading="lazy"
-                          sizes="(max-width: 1024px) 100vw, 50vw"
-                          className="object-cover"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
-                      </div>
-                      <div className="flex flex-col p-6 md:p-8">
-                        <div className="mb-3 flex flex-wrap items-center gap-2">
-                          {w.tags.map((t) => (
-                            <span key={t.label} className={`rounded-full border px-3 py-1 text-[11px] font-medium ${t.cls}`}>
-                              {t.label}
-                            </span>
-                          ))}
-                        </div>
-                        <h3 className="font-display mb-2 text-[22px] font-semibold leading-8 text-[#161412] md:text-[26px] md:leading-9">
-                          {w.title}
-                        </h3>
-                        <p className="mb-4 text-[14px] leading-6 text-[#4F4A43]">{w.desc}</p>
-                        <a
-                          href="#contact-studio"
-                          className={`inline-flex items-center gap-2 text-[14px] font-semibold text-[#161412] transition-colors ${w.linkHover}`}
-                        >
-                          <span>View Case Study</span>
-                          <span className="material-symbols-outlined text-[18px] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
-                            north_east
-                          </span>
-                        </a>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-                <div className="mt-2 flex items-center justify-center gap-4">
-                  <button
-                    onClick={() => scrollWorks(-1)}
-                    aria-label="Scroll works left"
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-stone-200 bg-white text-[#161412] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-amber-400 hover:shadow-md active:translate-y-0 active:scale-95"
-                  >
-                    <span className="material-symbols-outlined text-xl">arrow_back</span>
-                  </button>
-                  <button
-                    onClick={() => scrollWorks(1)}
-                    aria-label="Scroll works right"
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-stone-200 bg-white text-[#161412] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-amber-400 hover:shadow-md active:translate-y-0 active:scale-95"
-                  >
-                    <span className="material-symbols-outlined text-xl">arrow_forward</span>
-                  </button>
-                </div>
-              </div>
-            </Reveal>
-          </section>
+          <WorksRow />
 
           {/* PROCESS */}
           <section id="process" className="mx-auto w-full max-w-7xl scroll-mt-24 px-5 py-12 md:px-14">
@@ -741,19 +337,16 @@ export default function Home() {
               </p>
               <InquiryForm />
               <div className="mb-6 flex flex-col items-center gap-4 sm:flex-row">
-                <button onClick={copyEmail} className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-stone-100 px-6 py-3 text-[12px] font-semibold text-[#161412] transition-all duration-300 hover:-translate-y-0.5 hover:bg-stone-200 active:translate-y-0 active:scale-[0.98]">
-                  <span className="material-symbols-outlined text-[16px]">content_copy</span>
-                  <span>{copied ? "Copied to Clipboard!" : "Copy Email Address"}</span>
-                </button>
+                <CopyEmailButton />
               </div>
               <p className="text-[13px] text-stone-600">
                 Direct:{" "}
-                <a href="mailto:yerniteja1@gmail.com" className="font-medium text-[#161412] underline-offset-4 hover:underline">
-                  yerniteja1@gmail.com
+                <a href={`mailto:${CONTACT_EMAIL}`} className="font-medium text-[#161412] underline-offset-4 hover:underline">
+                  {CONTACT_EMAIL}
                 </a>{" "}
                 •{" "}
-                <a href="tel:+917981154679" className="font-medium text-[#161412] underline-offset-4 hover:underline">
-                  +91 79811 54679
+                <a href={CONTACT_PHONE_HREF} className="font-medium text-[#161412] underline-offset-4 hover:underline">
+                  {CONTACT_PHONE_DISPLAY}
                 </a>{" "}
                 • Typical response within 24 hours
               </p>
@@ -773,12 +366,12 @@ export default function Home() {
               <span className="font-display text-[20px] font-bold tracking-tight text-[#161412]">Yantram Studio</span>
               <p className="max-w-sm text-[13px] text-[#4F4A43]">A warm sanctuary shaping digital artifacts with architectural patience and intentional craft.</p>
               <p className="text-[13px] text-[#4F4A43]">
-                <a href="mailto:yerniteja1@gmail.com" className="underline-offset-4 hover:text-[#161412] hover:underline">
-                  yerniteja1@gmail.com
+                <a href={`mailto:${CONTACT_EMAIL}`} className="underline-offset-4 hover:text-[#161412] hover:underline">
+                  {CONTACT_EMAIL}
                 </a>{" "}
                 •{" "}
-                <a href="tel:+917981154679" className="underline-offset-4 hover:text-[#161412] hover:underline">
-                  +91 79811 54679
+                <a href={CONTACT_PHONE_HREF} className="underline-offset-4 hover:text-[#161412] hover:underline">
+                  {CONTACT_PHONE_DISPLAY}
                 </a>
               </p>
             </div>
