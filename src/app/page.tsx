@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import BotanicalCanvas from "@/components/BotanicalCanvas";
 
 const NAV = [
@@ -106,14 +107,26 @@ const VALUES = [
   { icon: "favorite", color: "text-amber-700", title: "Long-term Care", desc: "We stand by what we construct. Post-launch support and architectural mentorship ensure your software thrives." },
 ];
 
-function Monogram({ size = "w-16 h-16 md:w-20 md:h-20" }: { size?: string }) {
+function LogoImage({
+  src,
+  alt,
+  size,
+  priority = false,
+}: {
+  src: string;
+  alt: string;
+  size: string;
+  priority?: boolean;
+}) {
   return (
-    <svg viewBox="0 0 64 64" className={`${size} object-contain`} fill="none" aria-label="Yantram Studio Monogram">
-      <path d="M32 6 L54 16 V34 C54 46 44 56 32 59 C20 56 10 46 10 34 V16 L32 6Z" stroke="#161412" strokeWidth="2.5" fill="#FBF9F6" />
-      <path d="M22 24 L32 44 L42 24" stroke="#161412" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="32" cy="18" r="2.4" fill="#C59B27" />
-      <path d="M26 34 H38" stroke="#2D5A43" strokeWidth="2" strokeLinecap="round" />
-    </svg>
+    <Image
+      src={src}
+      alt={alt}
+      width={128}
+      height={128}
+      priority={priority}
+      className={`${size} object-contain`}
+    />
   );
 }
 
@@ -144,8 +157,8 @@ export default function Home() {
       <header className="fixed left-0 right-0 top-0 z-50 w-full border-b border-stone-200/80 bg-[#FBF9F6]/85 backdrop-blur-xl transition-all duration-300">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 md:px-14">
           <a href="#" className="group flex items-center gap-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-stone-200 bg-white p-1.5 shadow-sm transition-transform duration-300 group-hover:scale-105">
-              <Monogram size="h-7 w-auto" />
+            <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-stone-200 bg-white p-1 shadow-sm transition-transform duration-300 group-hover:scale-105">
+              <LogoImage src="/apple-touch-icon.png" alt="Yantram Studio logo" size="h-7 w-7" priority />
             </div>
             <span className="font-display text-[20px] font-bold uppercase tracking-wider text-[#161412]">Yantram</span>
           </a>
@@ -179,8 +192,8 @@ export default function Home() {
             <section className="relative mx-auto flex max-w-7xl flex-col items-center px-5 pb-12 pt-12 text-center md:px-14 md:pb-16 md:pt-24">
               <div className="group relative mb-6">
                 <div className="absolute -inset-3 rounded-2xl bg-gradient-to-tr from-amber-200/40 via-stone-200/50 to-emerald-200/40 opacity-80 blur-lg transition-opacity duration-700 group-hover:opacity-100" />
-                <div className="relative flex h-24 w-24 items-center justify-center rounded-2xl border border-stone-200/80 bg-white p-3 shadow-[0_12px_32px_rgba(22,20,18,0.06)] transition-transform duration-500 hover:scale-105 md:h-28 md:w-28">
-                  <Monogram />
+                <div className="relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-2xl border border-stone-200/80 bg-white p-2 shadow-[0_12px_32px_rgba(22,20,18,0.06)] transition-transform duration-500 hover:scale-105 md:h-28 md:w-28">
+                  <LogoImage src="/android-chrome-512x512.png" alt="Yantram Studio Monogram" size="h-20 w-20 md:h-24 md:w-24" priority />
                 </div>
               </div>
               <div className="mb-4 inline-flex items-center gap-3 rounded-full border border-stone-200 bg-white px-4 py-1.5 text-[12px] font-semibold uppercase tracking-wider text-stone-800 shadow-sm">
@@ -409,9 +422,14 @@ export default function Home() {
 
       <footer className="relative z-10 mt-auto w-full border-t border-stone-200/90 bg-[#F5F2EC] py-12">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-5 text-center md:flex-row md:px-14 md:text-left">
-          <div className="flex flex-col gap-1">
-            <span className="font-display text-[20px] font-bold tracking-tight text-[#161412]">Yantram Studio</span>
-            <p className="max-w-sm text-[13px] text-[#4F4A43]">A warm sanctuary shaping digital artifacts with architectural patience and intentional craft.</p>
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-stone-200 bg-white p-1 shadow-sm">
+              <LogoImage src="/favicon-32x32.png" alt="Yantram Studio logo" size="h-7 w-7" />
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="font-display text-[20px] font-bold tracking-tight text-[#161412]">Yantram Studio</span>
+              <p className="max-w-sm text-[13px] text-[#4F4A43]">A warm sanctuary shaping digital artifacts with architectural patience and intentional craft.</p>
+            </div>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-8">
             <a href="#contact-studio" className="text-[12px] font-semibold text-[#4F4A43] transition-colors duration-200 hover:text-[#161412]">Contact Us</a>
