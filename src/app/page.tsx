@@ -1,5 +1,7 @@
 import Image from "next/image";
-import BotanicalCanvas from "@/components/BotanicalCanvas";
+import ColdWash from "@/components/ColdWash";
+import FilmGrain from "@/components/FilmGrain";
+import RainStormCanvas from "@/components/RainStormCanvas";
 import Icon from "@/components/Icon";
 import InquiryForm, { CopyEmailButton } from "@/components/InquiryForm";
 import LogoImage from "@/components/LogoImage";
@@ -128,7 +130,9 @@ export default function Home() {
       >
         Skip to content
       </a>
-      <BotanicalCanvas />
+      <RainStormCanvas />
+      <ColdWash />
+      <FilmGrain />
 
       <div className="animate-float fixed bottom-6 right-6 z-40 flex select-none items-center gap-2.5 rounded-full border border-stone-300/80 bg-white/90 px-3.5 py-1.5 text-[#4F4A43] shadow-[0_8px_24px_rgba(22,20,18,0.06)] backdrop-blur-md">
         <span className="relative flex h-2 w-2">
