@@ -2,7 +2,21 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import BotanicalCanvas from "@/components/BotanicalCanvas";
+import Tilt from "@/components/Tilt";
+import { Reveal, Stagger, StaggerItem } from "@/components/Reveal";
+
+const MARQUEE = [
+  "Web Experiences",
+  "Mobile Apps",
+  "Cloud & Infra",
+  "AI Assistance",
+  "Design Systems",
+  "MVP Sprints",
+  "Brand Identity",
+  "Long-term Care",
+];
 
 const NAV = [
   { label: "Works", href: "#selected-works" },
@@ -186,55 +200,94 @@ export default function Home() {
         <div className="bg-atelier-mesh flex w-full flex-col">
           {/* HERO */}
           <div className="relative w-full overflow-hidden border-b border-stone-200/60">
-            <div className="pointer-events-none absolute left-1/2 top-12 -z-10 h-[480px] w-[720px] -translate-x-1/2 rounded-full bg-amber-100/40 blur-[140px]" />
-            <div className="pointer-events-none absolute right-12 top-48 -z-10 h-[420px] w-[420px] rounded-full bg-emerald-100/35 blur-[120px]" />
+            <div className="animate-glow pointer-events-none absolute left-1/2 top-12 -z-10 h-[480px] w-[720px] -translate-x-1/2 rounded-full bg-amber-100/40 blur-[140px]" />
+            <div className="animate-glow pointer-events-none absolute right-12 top-48 -z-10 h-[420px] w-[420px] rounded-full bg-emerald-100/35 blur-[120px]" />
             <div className="pointer-events-none absolute left-8 top-72 -z-10 h-[400px] w-[400px] rounded-full bg-stone-200/50 blur-[130px]" />
             <section className="relative mx-auto flex max-w-7xl flex-col items-center px-5 pb-12 pt-12 text-center md:px-14 md:pb-16 md:pt-24">
-              <div className="group relative mb-6">
+              <motion.div
+                initial={{ opacity: 0, y: 24, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.7, ease: [0.21, 0.65, 0.16, 1] }}
+                className="group relative mb-6"
+              >
                 <div className="absolute -inset-3 rounded-2xl bg-gradient-to-tr from-amber-200/40 via-stone-200/50 to-emerald-200/40 opacity-80 blur-lg transition-opacity duration-700 group-hover:opacity-100" />
-                <div className="relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-2xl border border-stone-200/80 bg-white p-2 shadow-[0_12px_32px_rgba(22,20,18,0.06)] transition-transform duration-500 hover:scale-105 md:h-28 md:w-28">
+                <div className="animate-float relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-2xl border border-stone-200/80 bg-white p-2 shadow-[0_12px_32px_rgba(22,20,18,0.06)] transition-transform duration-500 hover:scale-105 md:h-28 md:w-28">
                   <LogoImage src="/android-chrome-512x512.png" alt="Yantram Studio Monogram" size="h-20 w-20 md:h-24 md:w-24" priority />
                 </div>
-              </div>
-              <div className="mb-4 inline-flex items-center gap-3 rounded-full border border-stone-200 bg-white px-4 py-1.5 text-[12px] font-semibold uppercase tracking-wider text-stone-800 shadow-sm">
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="mb-4 inline-flex items-center gap-3 rounded-full border border-stone-200 bg-white px-4 py-1.5 text-[12px] font-semibold uppercase tracking-wider text-stone-800 shadow-sm"
+              >
                 <span className="h-2 w-2 animate-pulse rounded-full bg-amber-600" />
                 <span>Bespoke Digital Product Studio</span>
-              </div>
-              <h1 className="font-display mx-auto mb-4 max-w-4xl text-[36px] font-bold leading-[44px] tracking-tight text-[#161412] md:text-[56px] md:leading-[64px]">
+              </motion.div>
+              <motion.h1
+                initial={{ opacity: 0, y: 26 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.18 }}
+                className="font-display mx-auto mb-4 max-w-4xl text-[36px] font-bold leading-[44px] tracking-tight text-[#161412] md:text-[56px] md:leading-[64px]"
+              >
                 BUILD STEADY. <span className="italic font-serif text-amber-700">RISE FAST.</span>
-              </h1>
-              <p className="mx-auto mb-8 max-w-2xl text-[18px] leading-7 text-[#4F4A43]">
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.28 }}
+                className="mx-auto mb-8 max-w-2xl text-[18px] leading-7 text-[#4F4A43]"
+              >
                 We design and craft digital products that feel natural, work flawlessly, and help ambitious companies grow with architectural calm and tactile elegance.
-              </p>
-              <div className="mb-12 flex flex-wrap items-center justify-center gap-4">
-                <a href="#contact-studio" className="inline-flex items-center gap-2 rounded-full bg-[#161412] px-8 py-3 text-[14px] font-semibold text-white shadow-[0_6px_20px_rgba(22,20,18,0.14)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-stone-800">
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.36 }}
+                className="mb-12 flex flex-wrap items-center justify-center gap-4"
+              >
+                <a href="#contact-studio" className="inline-flex items-center gap-2 rounded-full bg-[#161412] px-8 py-3 text-[14px] font-semibold text-white shadow-[0_6px_20px_rgba(22,20,18,0.14)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-stone-800 hover:shadow-[0_10px_30px_rgba(22,20,18,0.22)] active:translate-y-0 active:scale-[0.98]">
                   <span>Start a Project</span>
                   <span className="material-symbols-outlined text-[18px]">north_east</span>
                 </a>
-                <a href="#selected-works" className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-8 py-3 text-[14px] font-semibold text-[#161412] shadow-sm transition-all duration-300 hover:border-stone-300 hover:bg-stone-50">
+                <a href="#selected-works" className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-8 py-3 text-[14px] font-semibold text-[#161412] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-stone-300 hover:bg-stone-50 active:translate-y-0 active:scale-[0.98]">
                   <span>Explore Works</span>
                   <span className="material-symbols-outlined text-[18px]">arrow_downward</span>
                 </a>
-              </div>
-              <div className="grid w-full max-w-4xl grid-cols-1 gap-4 pt-6 sm:grid-cols-3">
+              </motion.div>
+              <Stagger className="grid w-full max-w-4xl grid-cols-1 gap-4 pt-6 sm:grid-cols-3">
                 {METRICS.map((m) => (
-                  <div key={m.title} className="flex items-center gap-4 rounded-xl border border-stone-200/80 bg-white p-6 text-left shadow-[0_4px_16px_rgba(22,20,18,0.03)] transition-shadow hover:shadow-md">
-                    <div className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl border ${m.bg}`}>
-                      <span className="material-symbols-outlined text-2xl">{m.icon}</span>
+                  <StaggerItem key={m.title}>
+                    <div className="flex items-center gap-4 rounded-xl border border-stone-200/80 bg-white p-6 text-left shadow-[0_4px_16px_rgba(22,20,18,0.03)] transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+                      <div className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl border transition-transform duration-300 group-hover:scale-110 ${m.bg}`}>
+                        <span className="material-symbols-outlined text-2xl">{m.icon}</span>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="font-display text-[20px] font-semibold leading-7 text-[#161412]">{m.title}</span>
+                        <span className="text-[13px] leading-5 text-[#4F4A43]">{m.sub}</span>
+                      </div>
                     </div>
-                    <div className="flex flex-col">
-                      <span className="font-display text-[20px] font-semibold leading-7 text-[#161412]">{m.title}</span>
-                      <span className="text-[13px] leading-5 text-[#4F4A43]">{m.sub}</span>
-                    </div>
-                  </div>
+                  </StaggerItem>
                 ))}
-              </div>
+              </Stagger>
             </section>
           </div>
 
+          {/* MARQUEE */}
+          <div className="overflow-hidden border-b border-stone-200/60 bg-white/60 py-4 backdrop-blur">
+            <div className="animate-marquee flex w-max items-center gap-8 pr-8">
+              {[...MARQUEE, ...MARQUEE].map((t, i) => (
+                <span key={`${t}-${i}`} className="flex items-center gap-8 text-[12px] font-semibold uppercase tracking-[0.18em] text-stone-500">
+                  {t}
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber-600/70" />
+                </span>
+              ))}
+            </div>
+          </div>
+
           {/* CAPABILITIES */}
-          <section id="capabilities" className="mx-auto w-full max-w-7xl px-5 py-12 md:px-14">
-            <div className="mb-12 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+          <section id="capabilities" className="mx-auto w-full max-w-7xl scroll-mt-24 px-5 py-12 md:px-14">
+            <Reveal className="mb-12 flex flex-col justify-between gap-4 md:flex-row md:items-end">
               <div className="flex max-w-xl flex-col gap-1">
                 <span className="text-[12px] font-semibold uppercase tracking-widest text-amber-700">Disciplines &amp; Craft</span>
                 <h2 className="font-display text-[28px] font-semibold leading-9 tracking-tight text-[#161412] md:text-[36px] md:leading-[44px]">
@@ -244,10 +297,12 @@ export default function Home() {
               <p className="max-w-md text-[15px] text-[#4F4A43]">
                 Every system we sculpt pairs organic human touch with robust, production-grade engineering.
               </p>
-            </div>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            </Reveal>
+            <Stagger className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {CAPABILITIES.map((c) => (
-                <div key={c.title} className="group flex flex-col justify-between rounded-2xl border border-stone-200/80 bg-white p-8 shadow-[0_4px_20px_rgba(22,20,18,0.03)] transition-all duration-300 hover:shadow-[0_12px_36px_rgba(22,20,18,0.07)]">
+                <StaggerItem key={c.title}>
+                <Tilt max={7}>
+                <div className="group flex h-full flex-col justify-between rounded-2xl border border-stone-200/80 bg-white p-8 shadow-[0_4px_20px_rgba(22,20,18,0.03)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(22,20,18,0.07)]">
                   <div className="mb-6 flex items-center justify-between">
                     <div className={`flex h-12 w-12 items-center justify-center rounded-xl border ${c.iconBg}`}>
                       <span className="material-symbols-outlined text-2xl">{c.icon}</span>
@@ -258,15 +313,15 @@ export default function Home() {
                     <h3 className={`font-display mb-2 text-[24px] font-semibold leading-8 text-[#161412] transition-colors ${c.hover}`}>{c.title}</h3>
                     <p className="text-[15px] text-[#4F4A43]">{c.desc}</p>
                   </div>
-                  <div className="relative flex h-52 w-full items-center justify-center overflow-hidden rounded-xl border border-stone-200 bg-stone-50 p-6">
+                  <div className="zoom-img relative flex h-52 w-full items-center justify-center overflow-hidden rounded-xl border border-stone-200 bg-stone-50">
                     {c.img ? (
                       <>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img alt={c.title} src={c.img} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <img alt={c.title} src={c.img} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
                       </>
                     ) : (
-                      <svg className="h-full w-full text-stone-400 transition-colors duration-500 group-hover:text-amber-700" fill="none" viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
+                      <svg className="h-full w-full p-6 text-stone-400 transition-colors duration-500 group-hover:text-amber-700" fill="none" viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
                         <path className="opacity-60" d="M40 70C40 47.9 57.9 30 80 30C97.7 30 112.6 41.4 117.9 57.3C121.8 54.5 126.5 52.9 131.6 52.9C144.4 52.9 154.8 62.7 155.8 75.2C158.4 74.4 161.1 74 164 74C177.3 74 188 84.7 188 98C188 111.3 177.3 122 164 122H70C53.4 122 40 108.6 40 92V70Z" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
                         <circle className="text-amber-600" cx="240" cy="50" r="24" stroke="currentColor" strokeDasharray="4 4" strokeWidth="2" />
                         <circle className="text-emerald-700" cx="270" cy="95" r="16" stroke="currentColor" strokeWidth="2" />
@@ -276,13 +331,15 @@ export default function Home() {
                     )}
                   </div>
                 </div>
+                </Tilt>
+                </StaggerItem>
               ))}
-            </div>
+            </Stagger>
           </section>
 
           {/* ETHOS */}
-          <section id="ethos" className="relative my-8 w-full overflow-hidden border-y border-stone-200/90 bg-[#F5F2EC] py-24">
-            <div className="relative z-10 mx-auto max-w-5xl px-5 text-center md:px-14">
+          <section id="ethos" className="relative my-8 w-full scroll-mt-24 overflow-hidden border-y border-stone-200/90 bg-[#F5F2EC] py-24">
+            <Reveal className="relative z-10 mx-auto max-w-5xl px-5 text-center md:px-14">
               <div className="mb-4 inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-wider text-emerald-800">
                 <span className="material-symbols-outlined text-[18px]">spa</span>
                 <span>Atelier Ethos</span>
@@ -294,16 +351,16 @@ export default function Home() {
                 True technology shouldn&rsquo;t scream for attention with icy neon or frantic telemetry. It should feel as composed as carved walnut and as purposeful as an ancient orchard — quietly supporting human lives and enterprise growth.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-8 text-[14px] font-semibold text-stone-700">
-                <div className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-amber-600" /><span className="font-medium">Zero Fluff</span></div>
-                <div className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-emerald-700" /><span className="font-medium">Honest Craftsmanship</span></div>
-                <div className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-stone-900" /><span className="font-medium">Enduring Quality</span></div>
+                <div className="flex items-center gap-2 transition-transform duration-300 hover:-translate-y-0.5"><span className="h-2.5 w-2.5 rounded-full bg-amber-600" /><span className="font-medium">Zero Fluff</span></div>
+                <div className="flex items-center gap-2 transition-transform duration-300 hover:-translate-y-0.5"><span className="h-2.5 w-2.5 rounded-full bg-emerald-700" /><span className="font-medium">Honest Craftsmanship</span></div>
+                <div className="flex items-center gap-2 transition-transform duration-300 hover:-translate-y-0.5"><span className="h-2.5 w-2.5 rounded-full bg-stone-900" /><span className="font-medium">Enduring Quality</span></div>
               </div>
-            </div>
+            </Reveal>
           </section>
 
           {/* WORKS */}
-          <section id="selected-works" className="mx-auto w-full max-w-7xl px-5 py-12 md:px-14">
-            <div className="mb-12 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+          <section id="selected-works" className="mx-auto w-full max-w-7xl scroll-mt-24 px-5 py-12 md:px-14">
+            <Reveal className="mb-12 flex flex-col justify-between gap-4 md:flex-row md:items-end">
               <div>
                 <span className="text-[12px] font-semibold uppercase tracking-widest text-amber-700">Selected Work</span>
                 <h2 className="font-display mt-1 text-[28px] font-semibold leading-9 text-[#161412] md:text-[36px] md:leading-[44px]">Products built for founders who value detail.</h2>
@@ -312,11 +369,12 @@ export default function Home() {
                 <span>Request Case Archive</span>
                 <span className="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-1">east</span>
               </a>
-            </div>
+            </Reveal>
             <div className="flex flex-col gap-12">
               {WORKS.map((w) => (
-                <div key={w.title} className="flex flex-col items-center gap-8 rounded-2xl border border-stone-200/90 bg-white p-6 shadow-[0_6px_24px_rgba(22,20,18,0.04)] transition-all duration-300 hover:shadow-[0_16px_40px_rgba(22,20,18,0.08)] md:p-12 lg:flex-row">
-                  <div className={`relative h-72 w-full overflow-hidden rounded-xl border border-stone-200 bg-stone-100 md:h-96 lg:w-1/2 ${w.reverse ? "lg:order-2" : ""}`}>
+                <Reveal key={w.title}>
+                <div className="group flex flex-col items-center gap-8 rounded-2xl border border-stone-200/90 bg-white p-6 shadow-[0_6px_24px_rgba(22,20,18,0.04)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(22,20,18,0.08)] md:p-12 lg:flex-row">
+                  <div className={`zoom-img relative h-72 w-full overflow-hidden rounded-xl border border-stone-200 bg-stone-100 md:h-96 lg:w-1/2 ${w.reverse ? "lg:order-2" : ""}`}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img alt={w.title} src={w.img} className="h-full w-full object-cover" loading="lazy" />
                   </div>
@@ -334,20 +392,23 @@ export default function Home() {
                     </a>
                   </div>
                 </div>
+                </Reveal>
               ))}
             </div>
           </section>
 
           {/* PROCESS */}
-          <section id="process" className="mx-auto w-full max-w-7xl px-5 py-12 md:px-14">
-            <div className="mx-auto mb-12 max-w-2xl text-center">
+          <section id="process" className="mx-auto w-full max-w-7xl scroll-mt-24 px-5 py-12 md:px-14">
+            <Reveal className="mx-auto mb-12 max-w-2xl text-center">
               <span className="text-[12px] font-semibold uppercase tracking-widest text-amber-700">The Path Forward</span>
               <h2 className="font-display mt-1 text-[28px] font-semibold leading-9 text-[#161412] md:text-[36px] md:leading-[44px]">How We Grow Together</h2>
               <p className="mt-2 text-[15px] text-[#4F4A43]">No mysterious handoffs or convoluted bureaucracy. Just four purposeful stages from initial seedling to thriving scale.</p>
-            </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+            </Reveal>
+            <Stagger className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
               {STEPS.map((s) => (
-                <div key={s.title} className={`group flex flex-col justify-between rounded-2xl border border-stone-200/80 bg-white p-6 shadow-sm transition-all hover:shadow-md ${s.hoverBorder}`}>
+                <StaggerItem key={s.title}>
+                <Tilt max={10}>
+                <div className={`group flex h-full flex-col justify-between rounded-2xl border border-stone-200/80 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${s.hoverBorder}`}>
                   <div>
                     <div className="mb-4 flex items-center justify-between">
                       <span className={`flex h-8 w-8 items-center justify-center rounded-full border text-[20px] font-bold ${s.numBg}`}>{s.n}</span>
@@ -358,16 +419,23 @@ export default function Home() {
                     <p className="text-[13px] leading-5 text-[#4F4A43]">{s.desc}</p>
                   </div>
                   <div className={`flex items-center justify-end pt-4 ${s.foot}`}>
-                    <span className="material-symbols-outlined text-lg">{s.footIcon}</span>
+                    <span className="material-symbols-outlined text-lg transition-transform duration-300 group-hover:translate-x-1">{s.footIcon}</span>
                   </div>
                 </div>
+                </Tilt>
+                </StaggerItem>
               ))}
-            </div>
+            </Stagger>
           </section>
 
           {/* PARTNERSHIP */}
           <section className="mx-auto w-full max-w-7xl px-5 py-12 md:px-14">
-            <div className="relative overflow-hidden rounded-3xl border border-stone-200/90 bg-[#F5F2EC] p-8 md:p-16">
+            <Reveal>
+            <motion.div
+              whileHover={{ scale: 1.005 }}
+              transition={{ type: "spring", stiffness: 200, damping: 22 }}
+              className="relative overflow-hidden rounded-3xl border border-stone-200/90 bg-[#F5F2EC] p-8 md:p-16"
+            >
               <div className="mb-12 max-w-2xl">
                 <span className="text-[12px] font-semibold uppercase tracking-widest text-amber-700">The Partnership</span>
                 <h2 className="font-display mt-1 text-[28px] font-semibold leading-9 text-[#161412] md:text-[36px] md:leading-[44px]">Why founders and product leaders trust Yantram.</h2>
@@ -375,8 +443,8 @@ export default function Home() {
               </div>
               <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
                 {VALUES.map((v) => (
-                  <div key={v.title} className="flex flex-col gap-2">
-                    <div className={`mb-1 flex h-10 w-10 items-center justify-center rounded-xl border border-stone-200 bg-white shadow-sm ${v.color}`}>
+                  <div key={v.title} className="group flex flex-col gap-2 transition-transform duration-300 hover:-translate-y-1">
+                    <div className={`mb-1 flex h-10 w-10 items-center justify-center rounded-xl border border-stone-200 bg-white shadow-sm transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 ${v.color}`}>
                       <span className="material-symbols-outlined text-xl">{v.icon}</span>
                     </div>
                     <h4 className="font-display text-[20px] font-semibold leading-7 text-[#161412]">{v.title}</h4>
@@ -384,14 +452,16 @@ export default function Home() {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
+            </Reveal>
           </section>
 
           {/* CTA */}
-          <section id="contact-studio" className="mx-auto w-full max-w-7xl px-5 py-16 md:px-14">
-            <div className="relative flex flex-col items-center overflow-hidden rounded-3xl border border-stone-200/90 bg-white p-8 text-center shadow-[0_16px_48px_rgba(22,20,18,0.06)] md:p-24">
-              <div className="pointer-events-none absolute -top-24 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-amber-100/50 blur-3xl" />
-              <div className="pointer-events-none absolute -bottom-24 right-10 h-80 w-80 rounded-full bg-emerald-100/40 blur-3xl" />
+          <section id="contact-studio" className="mx-auto w-full max-w-7xl scroll-mt-24 px-5 py-16 md:px-14">
+            <Reveal>
+            <div className="relative flex flex-col items-center overflow-hidden rounded-3xl border border-stone-200/90 bg-white p-8 text-center shadow-[0_16px_48px_rgba(22,20,18,0.06)] transition-shadow duration-500 hover:shadow-[0_24px_64px_rgba(22,20,18,0.10)] md:p-24">
+              <div className="animate-glow pointer-events-none absolute -top-24 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-amber-100/50 blur-3xl" />
+              <div className="animate-glow pointer-events-none absolute -bottom-24 right-10 h-80 w-80 rounded-full bg-emerald-100/40 blur-3xl" />
               <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-stone-200 bg-[#F5F2EC] text-[#161412] shadow-sm">
                 <span className="material-symbols-outlined text-3xl">mark_email_read</span>
               </div>
@@ -403,11 +473,16 @@ export default function Home() {
                 Whether you are shaping an ambitious new venture from zero or revitalizing an essential product, we would love to listen.
               </p>
               <div className="mb-6 flex flex-col items-center gap-4 sm:flex-row">
-                <a href="mailto:hello@yantramstudio.com" className="inline-flex items-center gap-2 rounded-full bg-[#161412] px-8 py-3.5 text-[14px] font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-stone-800">
+                <motion.a
+                  href="mailto:hello@yantramstudio.com"
+                  whileHover={{ y: -2, scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="inline-flex items-center gap-2 rounded-full bg-[#161412] px-8 py-3.5 text-[14px] font-semibold text-white shadow-lg transition-colors duration-300 hover:bg-stone-800"
+                >
                   <span>Start a Conversation</span>
                   <span className="material-symbols-outlined text-[18px]">north_east</span>
-                </a>
-                <button onClick={copyEmail} className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-stone-100 px-6 py-3 text-[12px] font-semibold text-[#161412] transition-all hover:bg-stone-200">
+                </motion.a>
+                <button onClick={copyEmail} className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-stone-100 px-6 py-3 text-[12px] font-semibold text-[#161412] transition-all duration-300 hover:-translate-y-0.5 hover:bg-stone-200 active:translate-y-0 active:scale-[0.98]">
                   <span className="material-symbols-outlined text-[16px]">content_copy</span>
                   <span>{copied ? "Copied to Clipboard!" : "Copy Email Address"}</span>
                 </button>
@@ -416,6 +491,7 @@ export default function Home() {
                 Direct studio desk: <span className="font-medium text-[#161412]">hello@yantramstudio.com</span> • Typical response within 24 hours
               </p>
             </div>
+            </Reveal>
           </section>
         </div>
       </main>

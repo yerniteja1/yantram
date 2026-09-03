@@ -54,6 +54,57 @@ body {
   animation: slowFloat 6s ease-in-out infinite;
 }
 
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+@keyframes glowDrift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(24px, -18px) scale(1.06);
+  }
+}
+.animate-glow {
+  animation: glowDrift 10s ease-in-out infinite;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+.perspective-1200 {
+  perspective: 1200px;
+}
+
+/* smooth image zoom on card hover */
+.zoom-img img {
+  transition: transform 0.8s cubic-bezier(0.21, 0.65, 0.16, 1);
+}
+.zoom-img:hover img {
+  transform: scale(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-marquee,
+  .animate-glow {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 .font-display {
   font-family: var(--font-syne);
 }
