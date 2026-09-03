@@ -5,34 +5,42 @@ import Image from "next/image";
 import Icon from "@/components/Icon";
 import { Reveal } from "@/components/Reveal";
 
+// NOTE: these are design & engineering concepts shown to illustrate
+// capability — not client engagements. No metrics here are client results.
 const WORKS = [
   {
     tags: [
-      { label: "Workflow Studio", cls: "bg-amber-50 border-amber-200/60 text-amber-800" },
-      { label: "Enterprise SaaS", cls: "bg-stone-100 border-stone-200/80 text-stone-700" },
+      { label: "Web Application", cls: "bg-amber-50 border-amber-200/60 text-amber-800" },
+      { label: "Demo Concept", cls: "bg-stone-100 border-stone-200/80 text-stone-700" },
     ],
-    title: "Lumina — Intelligent Creative Orchestration",
-    desc: "Replaced 4 disconnected legacy tools with a single calm workspace for global design teams. Resulted in 42% reduced cycle times and zero training required for new team members.",
+    title: "Lumina — Team Workspace Concept",
+    what: "A calm workspace concept where design teams organize projects and collaborate.",
+    built: "What Yantram built: dashboard UI, project workspaces, and frontend architecture.",
+    highlights: "Highlights: responsive web app, clean component system, API-ready data layer.",
     img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80&auto=format&fit=crop",
     linkHover: "hover:text-amber-700",
   },
   {
     tags: [
-      { label: "Health & Wellness", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
-      { label: "Cross-Platform", cls: "bg-stone-100 border-stone-200/80 text-stone-700" },
+      { label: "Mobile App", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+      { label: "Demo Concept", cls: "bg-stone-100 border-stone-200/80 text-stone-700" },
     ],
-    title: "Haven Health — Compassionate Care Coordination",
-    desc: "A patient-first platform designed to replace clinical anxiety with clarity. Built with HIPAA compliance, biometrics, and real-time practitioner consultations.",
+    title: "Haven Health — Care Coordination Concept",
+    what: "A patient-friendly concept for appointments, practitioner messaging, and care plans.",
+    built: "What Yantram built: cross-platform app flows, appointment and messaging UI.",
+    highlights: "Highlights: accessible UX, maintainable mobile architecture, secure-by-design patterns.",
     img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80&auto=format&fit=crop",
     linkHover: "hover:text-emerald-700",
   },
   {
     tags: [
-      { label: "Fintech & Commerce", cls: "bg-stone-100 border-stone-200/80 text-stone-800" },
-      { label: "Global Scale", cls: "bg-stone-100 border-stone-200/80 text-stone-700" },
+      { label: "E-commerce", cls: "bg-stone-100 border-stone-200/80 text-stone-800" },
+      { label: "Demo Concept", cls: "bg-stone-100 border-stone-200/80 text-stone-700" },
     ],
-    title: "Solis Pay — Effortless Borderless Commerce",
-    desc: "Empowering 18,000+ independent artisans and digital goods sellers across 34 currencies with a frictionless 1-click checkout experience.",
+    title: "Solis Pay — Checkout Experience Concept",
+    what: "A frictionless checkout concept for independent sellers and digital goods.",
+    built: "What Yantram built: storefront UI with cart and checkout flows.",
+    highlights: "Highlights: payments-ready integration patterns, catalog and order workflows.",
     img: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80&auto=format&fit=crop",
     linkHover: "hover:text-amber-700",
   },
@@ -51,10 +59,11 @@ export default function WorksRow() {
       <Reveal className="mb-12 flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <div>
           <span className="text-[12px] font-semibold uppercase tracking-widest text-amber-700">Selected Work</span>
-          <h2 className="font-display mt-1 text-[28px] font-semibold leading-9 text-[#161412] md:text-[36px] md:leading-[44px]">Products built for founders who value detail.</h2>
+          <h2 className="font-display mt-1 text-[28px] font-semibold leading-9 text-[#161412] md:text-[36px] md:leading-[44px]">Digital products designed and engineered with care.</h2>
+          <p className="mt-2 max-w-xl text-[14px] leading-6 text-[#4F4A43]">Design and engineering concepts showing how we work — ask us about real client projects on a call.</p>
         </div>
-        <a href="#contact-studio" className="group inline-flex items-center gap-2 text-[14px] font-semibold text-[#161412] transition-colors hover:text-amber-700">
-          <span>Request Case Archive</span>
+        <a href="#contact" className="group inline-flex shrink-0 items-center gap-2 text-[14px] font-semibold text-[#161412] transition-colors hover:text-amber-700">
+          <span>Start a similar project</span>
                 <Icon name="arrow-right" className="text-[18px] transition-transform group-hover:translate-x-1" />
         </a>
       </Reveal>
@@ -91,12 +100,14 @@ export default function WorksRow() {
                   <h3 className="font-display mb-2 text-[22px] font-semibold leading-8 text-[#161412] md:text-[26px] md:leading-9">
                     {w.title}
                   </h3>
-                  <p className="mb-4 text-[14px] leading-6 text-[#4F4A43]">{w.desc}</p>
+                  <p className="mb-1 text-[14px] leading-6 text-[#4F4A43]">{w.what}</p>
+                  <p className="mb-1 text-[14px] leading-6 text-[#4F4A43]">{w.built}</p>
+                  <p className="mb-4 text-[14px] leading-6 text-[#4F4A43]">{w.highlights}</p>
                   <a
-                    href="#contact-studio"
+                    href="#contact"
                     className={`inline-flex items-center gap-2 text-[14px] font-semibold text-[#161412] transition-colors ${w.linkHover}`}
                   >
-                      <span>View Case Study</span>
+                      <span>Discuss a similar build</span>
                       <Icon name="arrow-up-right" className="text-[18px] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </a>
                 </div>

@@ -8,7 +8,7 @@ import LogoImage from "@/components/LogoImage";
 export default function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState("#selected-works");
+  const [active, setActive] = useState("#services");
   const [showTop, setShowTop] = useState(false);
 
   useEffect(() => {
@@ -62,9 +62,12 @@ export default function SiteHeader() {
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 md:px-14">
           <a href="#" className="group flex items-center gap-4" onClick={() => setMenuOpen(false)}>
             <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-stone-200 bg-white p-1 shadow-sm transition-transform duration-300 group-hover:scale-105">
-              <LogoImage src="/apple-touch-icon.png" alt="Yantram Studio logo" size="h-7 w-7" priority />
+              <LogoImage src="/apple-touch-icon.png" alt="Yantram logo" size="h-7 w-7" priority />
             </div>
-            <span className="font-display text-[20px] font-bold uppercase tracking-wider text-[#161412]">Yantram</span>
+            <span className="flex flex-col leading-none">
+              <span className="font-display text-[20px] font-bold uppercase tracking-wider text-[#161412]">Yantram</span>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-stone-500">Digital Product Studio</span>
+            </span>
           </a>
           <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
             {NAV.map((l) => (
@@ -83,7 +86,7 @@ export default function SiteHeader() {
             ))}
           </nav>
           <div className="flex items-center gap-3">
-            <a href="#contact-studio" className="hidden items-center gap-2 rounded-full bg-[#161412] px-6 py-2.5 text-[14px] font-semibold text-white shadow-[0_4px_16px_rgba(22,20,18,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-stone-800 hover:shadow-[0_6px_24px_rgba(22,20,18,0.2)] sm:inline-flex">
+            <a href="#contact" className="hidden items-center gap-2 rounded-full bg-[#161412] px-6 py-2.5 text-[14px] font-semibold text-white shadow-[0_4px_16px_rgba(22,20,18,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-stone-800 hover:shadow-[0_6px_24px_rgba(22,20,18,0.2)] sm:inline-flex">
               <span>Start a Project</span>
               <Icon name="arrow-right" className="text-[18px]" />
             </a>
@@ -117,7 +120,7 @@ export default function SiteHeader() {
               </a>
             ))}
             <a
-              href="#contact-studio"
+              href="#contact"
               onClick={() => setMenuOpen(false)}
               className="mt-4 flex items-center justify-center gap-2 rounded-full bg-[#161412] px-6 py-3 text-[14px] font-semibold text-white sm:hidden"
             >
