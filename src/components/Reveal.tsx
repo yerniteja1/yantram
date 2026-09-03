@@ -1,8 +1,11 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
+/**
+ * Zero-dependency scroll reveal — pure CSS transition, triggered once
+ * by IntersectionObserver. No animation library, no per-frame JS.
+ */
 export function Reveal({
   children,
   delay = 0,
@@ -14,66 +17,70 @@ export function Reveal({
   y?: number;
   className?: string;
 }) {
-  const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "-80px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y: reduce ? 0 : y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, delay, ease: [0.21, 0.65, 0.16, 1] }}
+    <div
+      ref={ref}
+      className={`${className ?? ""} reveal${visible ? " reveal-visible" : ""}`}
+      style={
+        {
+          "--reveal-y": `${y}px`,
+          transitionDelay: `${delay}s`,
+        } as React.CSSProperties
+      }
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 
+// NOTE: stagger delays must be deterministic (computed from the map index
+// at the call site) — never from a mutable ref during render, or server and
+// client HTML will differ and React will throw a hydration mismatch.
 export function Stagger({
   children,
   className,
-  delay = 0.08,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  return <div className={className}>{children}</div>;
+}
+
+export function StaggerItem({
+  children,
+  className,
+  delay = 0,
 }: {
   children: ReactNode;
   className?: string;
   delay?: number;
 }) {
   return (
-    <motion.div
-      className={className}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: "-60px" }}
-      variants={{
-        hidden: {},
-        show: { transition: { staggerChildren: delay } },
-      }}
-    >
+    <Reveal className={className} delay={delay} y={26}>
       {children}
-    </motion.div>
-  );
-}
-
-export function StaggerItem({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  const reduce = useReducedMotion();
-  return (
-    <motion.div
-      className={className}
-      variants={{
-        hidden: { opacity: 0, y: reduce ? 0 : 26 },
-        show: {
-          opacity: 1,
-          y: 0,
-          transition: { duration: 0.6, ease: [0.21, 0.65, 0.16, 1] },
-        },
-      }}
-    >
-      {children}
-    </motion.div>
+    </Reveal>
   );
 }

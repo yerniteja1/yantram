@@ -238,14 +238,16 @@ export default function BotanicalCanvas() {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
     initRoots();
-    for (let i = 0; i < 38; i++) leaves.push(new BotanicalLeaf(getW, getH));
+    // fewer particles on small screens — cheaper on mobile GPUs
+    const leafCount = window.innerWidth < 768 ? 18 : 38;
+    for (let i = 0; i < leafCount; i++) leaves.push(new BotanicalLeaf(getW, getH));
 
     const onMove = (e: MouseEvent) => {
       mouse.targetX = e.clientX;
       mouse.targetY = e.clientY;
     };
 
-    const animate = () => {
+    const drawFrame = () => {
       time++;
       mouse.x += (mouse.targetX - mouse.x) * 0.08;
       mouse.y += (mouse.targetY - mouse.y) * 0.08;
@@ -258,16 +260,50 @@ export default function BotanicalCanvas() {
         leaf.update(time, mouse);
         leaf.draw(ctx);
       }
-      raf = requestAnimationFrame(animate);
     };
-    animate();
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let running = false;
+    const loop = () => {
+      drawFrame();
+      raf = requestAnimationFrame(loop);
+    };
+    const start = () => {
+      if (running || reduced) return;
+      running = true;
+      raf = requestAnimationFrame(loop);
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(raf);
+    };
+
+    // pause the loop when the tab is hidden — no wasted CPU/battery
+    const onVisibility = () => {
+      if (reduced) return;
+      if (document.hidden) stop();
+      else start();
+    };
 
     window.addEventListener("resize", resize);
     window.addEventListener("mousemove", onMove);
+    document.addEventListener("visibilitychange", onVisibility);
+
+    if (reduced) {
+      // static single frame — zero ongoing CPU cost
+      drawFrame();
+    } else {
+      // defer ambient animation until after first paint so it never
+      // competes with LCP / initial load on the main thread
+      var startTimer: number | undefined = window.setTimeout(start, 900);
+    }
+
     return () => {
-      cancelAnimationFrame(raf);
+      if (startTimer !== undefined) window.clearTimeout(startTimer);
+      stop();
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMove);
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
 

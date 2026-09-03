@@ -1,5 +1,18 @@
 import type { Metadata } from "next";
+import { Syne, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+
+const syne = Syne({
+  subsets: ["latin"],
+  variable: "--font-syne",
+  display: "swap",
+});
+
+const grotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-grotesk",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Yantram — Digital Product Studio",
@@ -22,17 +35,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className={`h-full ${syne.variable} ${grotesk.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap"
-          rel="stylesheet"
         />
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"

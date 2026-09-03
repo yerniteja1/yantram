@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import BotanicalCanvas from "@/components/BotanicalCanvas";
-import Tilt from "@/components/Tilt";
+import CountUp from "@/components/CountUp";
 import { Reveal, Stagger, StaggerItem } from "@/components/Reveal";
 
 const MARQUEE = [
@@ -27,9 +26,9 @@ const NAV = [
 ];
 
 const METRICS = [
-  { icon: "schedule", bg: "bg-amber-50 border-amber-200/60 text-amber-700", title: "3x Faster", sub: "Time-to-market without cutting corners" },
-  { icon: "verified_user", bg: "bg-emerald-50 border-emerald-200/60 text-emerald-800", title: "99.9%", sub: "Production reliability and calm scale" },
-  { icon: "handshake", bg: "bg-stone-100 border-stone-200 text-stone-800", title: "100%", sub: "Direct partnership with lead artisans" },
+  { icon: "schedule", bg: "bg-amber-50 border-amber-200/60 text-amber-700", value: 3, decimals: 0, suffix: "x Faster", sub: "Time-to-market without cutting corners" },
+  { icon: "verified_user", bg: "bg-emerald-50 border-emerald-200/60 text-emerald-800", value: 99.9, decimals: 1, suffix: "%", sub: "Production reliability and calm scale" },
+  { icon: "handshake", bg: "bg-stone-100 border-stone-200 text-stone-800", value: 100, decimals: 0, suffix: "%", sub: "Direct partnership with lead artisans" },
 ];
 
 const CAPABILITIES = [
@@ -144,8 +143,181 @@ function LogoImage({
   );
 }
 
+const PROJECT_TYPES = [
+  "New product from scratch",
+  "Redesign / revitalize",
+  "Mobile application",
+  "Cloud & infrastructure",
+  "Intelligent assistance / AI",
+  "Something else",
+];
+
+const inputCls =
+  "w-full rounded-lg border border-stone-200 bg-white px-4 py-3 text-[15px] text-[#161412] placeholder:text-stone-400 outline-none transition-colors focus:border-[#161412]";
+const labelCls =
+  "mb-1.5 block text-[12px] font-semibold uppercase tracking-wider text-stone-600";
+
+function InquiryForm() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [type, setType] = useState(PROJECT_TYPES[0]);
+  const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [sent, setSent] = useState(false);
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const errs: Record<string, string> = {};
+    if (name.trim().length < 2) errs.name = "Please tell us your name.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
+      errs.email = "Please enter a valid email address.";
+    if (message.trim().length < 10)
+      errs.message = "A sentence or two about your project helps us prepare.";
+    setErrors(errs);
+    if (Object.keys(errs).length > 0) return;
+    const subject = encodeURIComponent(`Project inquiry from ${name.trim()} — ${type}`);
+    const body = encodeURIComponent(
+      `Name: ${name.trim()}\nEmail: ${email.trim()}\nProject type: ${type}\n\n${message.trim()}`
+    );
+    window.location.href = `mailto:hello@yantramstudio.com?subject=${subject}&body=${body}`;
+    setSent(true);
+  };
+
+  if (sent) {
+    return (
+      <div className="mb-6 w-full max-w-2xl rounded-2xl border border-emerald-700/25 bg-emerald-50/60 p-8 text-center">
+        <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-emerald-200 bg-white text-emerald-800">
+          <span className="material-symbols-outlined text-2xl">check_circle</span>
+        </div>
+        <h3 className="font-display mb-1 text-[20px] font-semibold text-[#161412]">
+          Your email app should now be open
+        </h3>
+        <p className="mx-auto mb-4 max-w-md text-[14px] text-[#4F4A43]">
+          We pre-filled everything — just hit send. Prefer to write directly?
+          Use <span className="font-medium text-[#161412]">hello@yantramstudio.com</span>.
+        </p>
+        <button
+          onClick={() => setSent(false)}
+          className="text-[13px] font-semibold text-emerald-800 underline underline-offset-4 hover:text-emerald-900"
+        >
+          Send another inquiry
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <form
+      onSubmit={submit}
+      noValidate
+      className="mb-6 grid w-full max-w-2xl grid-cols-1 gap-4 rounded-2xl border border-stone-200/90 bg-[#F5F2EC]/60 p-6 text-left sm:grid-cols-2 md:p-8"
+    >
+      <div>
+        <label htmlFor="inq-name" className={labelCls}>
+          Your name
+        </label>
+        <input
+          id="inq-name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Ava Rao"
+          autoComplete="name"
+          className={inputCls}
+        />
+        {errors.name && <p className="mt-1 text-[13px] text-red-700">{errors.name}</p>}
+      </div>
+      <div>
+        <label htmlFor="inq-email" className={labelCls}>
+          Email
+        </label>
+        <input
+          id="inq-email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="ava@company.com"
+          autoComplete="email"
+          className={inputCls}
+        />
+        {errors.email && <p className="mt-1 text-[13px] text-red-700">{errors.email}</p>}
+      </div>
+      <div className="sm:col-span-2">
+        <label htmlFor="inq-type" className={labelCls}>
+          Project type
+        </label>
+        <select id="inq-type" value={type} onChange={(e) => setType(e.target.value)} className={inputCls}>
+          {PROJECT_TYPES.map((t) => (
+            <option key={t}>{t}</option>
+          ))}
+        </select>
+      </div>
+      <div className="sm:col-span-2">
+        <label htmlFor="inq-message" className={labelCls}>
+          About your project
+        </label>
+        <textarea
+          id="inq-message"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder="What are you building, and what does success look like?"
+          rows={4}
+          className={`${inputCls} resize-y`}
+        />
+        {errors.message && <p className="mt-1 text-[13px] text-red-700">{errors.message}</p>}
+      </div>
+      <div className="sm:col-span-2">
+        <button
+          type="submit"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#161412] px-8 py-3.5 text-[14px] font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-stone-800 active:translate-y-0 sm:w-auto"
+        >
+          <span>Send Inquiry</span>
+          <span className="material-symbols-outlined text-[18px]">north_east</span>
+        </button>
+      </div>
+    </form>
+  );
+}
+
 export default function Home() {
   const [copied, setCopied] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("#selected-works");
+  const [showTop, setShowTop] = useState(false);
+  const worksRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 8);
+      setShowTop(window.scrollY > 700);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // scrollspy — highlight the nav link for the section in view
+  useEffect(() => {
+    const sections = NAV.map((l) => document.getElementById(l.href.slice(1))).filter(
+      (el): el is HTMLElement => el !== null
+    );
+    if (!sections.length) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) setActive(`#${e.target.id}`);
+        }
+      },
+      { rootMargin: "-40% 0px -55% 0px" }
+    );
+    sections.forEach((s) => io.observe(s));
+    return () => io.disconnect();
+  }, []);
+  const scrollWorks = (dir: 1 | -1) => {
+    const el = worksRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * el.clientWidth * 0.6, behavior: "smooth" });
+  };
   const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText("hello@yantramstudio.com");
@@ -156,7 +328,24 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen bg-[#FBF9F6] font-[Space_Grotesk,Plus_Jakarta_Sans,sans-serif] text-[15px] leading-6 text-[#161412] antialiased">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-[#161412] focus:px-5 focus:py-2.5 focus:text-[14px] focus:font-semibold focus:text-white"
+      >
+        Skip to content
+      </a>
       <BotanicalCanvas />
+
+      {/* back to top */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        aria-label="Back to top"
+        className={`fixed bottom-6 left-6 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-stone-200 bg-white text-[#161412] shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:border-amber-400 hover:shadow-lg ${
+          showTop ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
+        }`}
+      >
+        <span className="material-symbols-outlined text-xl">arrow_upward</span>
+      </button>
 
       <div className="animate-float fixed bottom-6 right-6 z-40 flex select-none items-center gap-2.5 rounded-full border border-stone-300/80 bg-white/90 px-3.5 py-1.5 text-[#4F4A43] shadow-[0_8px_24px_rgba(22,20,18,0.06)] backdrop-blur-md">
         <span className="relative flex h-2 w-2">
@@ -164,39 +353,87 @@ export default function Home() {
           <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-600" />
         </span>
         <span className="text-[11px] font-semibold uppercase tracking-wider text-stone-700">Botanical Flux: Active</span>
-        <span className="text-[10px] text-stone-400">|</span>
+        <span className="text-[10px] text-stone-500">|</span>
         <span className="material-symbols-outlined text-[15px] text-stone-600">eco</span>
       </div>
 
-      <header className="fixed left-0 right-0 top-0 z-50 w-full border-b border-stone-200/80 bg-[#FBF9F6]/85 backdrop-blur-xl transition-all duration-300">
+      <header
+        className={`fixed left-0 right-0 top-0 z-50 w-full border-b backdrop-blur-xl transition-all duration-300 ${
+          scrolled
+            ? "border-stone-200 bg-[#FBF9F6]/95 shadow-[0_4px_20px_rgba(22,20,18,0.06)]"
+            : "border-stone-200/80 bg-[#FBF9F6]/85"
+        }`}
+      >
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 md:px-14">
-          <a href="#" className="group flex items-center gap-4">
+          <a href="#" className="group flex items-center gap-4" onClick={() => setMenuOpen(false)}>
             <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-stone-200 bg-white p-1 shadow-sm transition-transform duration-300 group-hover:scale-105">
               <LogoImage src="/apple-touch-icon.png" alt="Yantram Studio logo" size="h-7 w-7" priority />
             </div>
             <span className="font-display text-[20px] font-bold uppercase tracking-wider text-[#161412]">Yantram</span>
           </a>
-          <nav className="hidden items-center gap-8 lg:flex">
-            <a href="#selected-works" className="border-b-2 border-[#161412] pb-0.5 text-[14px] font-bold text-[#161412]">Works</a>
-            {NAV.slice(1).map((l) => (
-              <a key={l.label} href={l.href} className="text-[14px] font-semibold text-[#4F4A43] transition-colors duration-200 hover:text-[#161412]">
+          <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
+            {NAV.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                aria-current={active === l.href ? "true" : undefined}
+                className={`pb-0.5 text-[14px] transition-colors duration-200 ${
+                  active === l.href
+                    ? "border-b-2 border-[#161412] font-bold text-[#161412]"
+                    : "font-semibold text-[#4F4A43] hover:text-[#161412]"
+                }`}
+              >
                 {l.label}
               </a>
             ))}
           </nav>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <a href="#contact-studio" className="hidden items-center gap-2 rounded-full bg-[#161412] px-6 py-2.5 text-[14px] font-semibold text-white shadow-[0_4px_16px_rgba(22,20,18,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-stone-800 hover:shadow-[0_6px_24px_rgba(22,20,18,0.2)] sm:inline-flex">
               <span>Start a Project</span>
               <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
             </a>
-            <div className="flex h-9 w-9 items-center justify-center rounded-full border border-stone-200 bg-white text-[#161412] shadow-sm">
-              <span className="material-symbols-outlined text-[19px]">person</span>
-            </div>
+            <button
+              onClick={() => setMenuOpen((o) => !o)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-stone-200 bg-white text-[#161412] shadow-sm transition-colors hover:border-stone-300 lg:hidden"
+            >
+              <span className="material-symbols-outlined text-[22px]">{menuOpen ? "close" : "menu"}</span>
+            </button>
           </div>
         </div>
+        {/* mobile menu */}
+        {menuOpen && (
+          <nav
+            className="border-t border-stone-200/80 bg-[#FBF9F6]/95 px-5 pb-6 pt-3 backdrop-blur-xl lg:hidden"
+            aria-label="Mobile"
+          >
+            {NAV.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                onClick={() => setMenuOpen(false)}
+                className={`flex items-center justify-between border-b border-stone-200/60 py-3.5 text-[15px] transition-colors ${
+                  active === l.href ? "font-bold text-[#161412]" : "font-medium text-[#4F4A43]"
+                }`}
+              >
+                <span>{l.label}</span>
+                <span className="material-symbols-outlined text-[18px] text-stone-400">arrow_forward</span>
+              </a>
+            ))}
+            <a
+              href="#contact-studio"
+              onClick={() => setMenuOpen(false)}
+              className="mt-4 flex items-center justify-center gap-2 rounded-full bg-[#161412] px-6 py-3 text-[14px] font-semibold text-white sm:hidden"
+            >
+              <span>Start a Project</span>
+              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+            </a>
+          </nav>
+        )}
       </header>
 
-      <main className="relative z-10 w-full pt-20">
+      <main id="main" className="relative z-10 w-full pt-20">
         <div className="bg-atelier-mesh flex w-full flex-col">
           {/* HERO */}
           <div className="relative w-full overflow-hidden border-b border-stone-200/60">
@@ -204,47 +441,34 @@ export default function Home() {
             <div className="animate-glow pointer-events-none absolute right-12 top-48 -z-10 h-[420px] w-[420px] rounded-full bg-emerald-100/35 blur-[120px]" />
             <div className="pointer-events-none absolute left-8 top-72 -z-10 h-[400px] w-[400px] rounded-full bg-stone-200/50 blur-[130px]" />
             <section className="relative mx-auto flex max-w-7xl flex-col items-center px-5 pb-12 pt-12 text-center md:px-14 md:pb-16 md:pt-24">
-              <motion.div
-                initial={{ opacity: 0, y: 24, scale: 0.96 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.7, ease: [0.21, 0.65, 0.16, 1] }}
-                className="group relative mb-6"
-              >
+              <div className="hero-in group relative mb-6">
                 <div className="absolute -inset-3 rounded-2xl bg-gradient-to-tr from-amber-200/40 via-stone-200/50 to-emerald-200/40 opacity-80 blur-lg transition-opacity duration-700 group-hover:opacity-100" />
                 <div className="animate-float relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-2xl border border-stone-200/80 bg-white p-2 shadow-[0_12px_32px_rgba(22,20,18,0.06)] transition-transform duration-500 hover:scale-105 md:h-28 md:w-28">
-                  <LogoImage src="/android-chrome-512x512.png" alt="Yantram Studio Monogram" size="h-20 w-20 md:h-24 md:w-24" priority />
+                  <LogoImage src="/apple-touch-icon.png" alt="Yantram Studio Monogram" size="h-20 w-20 md:h-24 md:w-24" priority />
                 </div>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="mb-4 inline-flex items-center gap-3 rounded-full border border-stone-200 bg-white px-4 py-1.5 text-[12px] font-semibold uppercase tracking-wider text-stone-800 shadow-sm"
+              </div>
+              <div
+                style={{ animationDelay: "0.1s" }}
+                className="hero-in mb-4 inline-flex items-center gap-3 rounded-full border border-stone-200 bg-white px-4 py-1.5 text-[12px] font-semibold uppercase tracking-wider text-stone-800 shadow-sm"
               >
                 <span className="h-2 w-2 animate-pulse rounded-full bg-amber-600" />
                 <span>Bespoke Digital Product Studio</span>
-              </motion.div>
-              <motion.h1
-                initial={{ opacity: 0, y: 26 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.18 }}
-                className="font-display mx-auto mb-4 max-w-4xl text-[36px] font-bold leading-[44px] tracking-tight text-[#161412] md:text-[56px] md:leading-[64px]"
+              </div>
+              <h1
+                style={{ animationDelay: "0.18s" }}
+                className="hero-in font-display mx-auto mb-4 max-w-4xl text-[36px] font-bold leading-[44px] tracking-tight text-[#161412] md:text-[56px] md:leading-[64px]"
               >
                 BUILD STEADY. <span className="italic font-serif text-amber-700">RISE FAST.</span>
-              </motion.h1>
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.28 }}
-                className="mx-auto mb-8 max-w-2xl text-[18px] leading-7 text-[#4F4A43]"
+              </h1>
+              <p
+                style={{ animationDelay: "0.28s" }}
+                className="hero-in mx-auto mb-8 max-w-2xl text-[18px] leading-7 text-[#4F4A43]"
               >
                 We design and craft digital products that feel natural, work flawlessly, and help ambitious companies grow with architectural calm and tactile elegance.
-              </motion.p>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.36 }}
-                className="mb-12 flex flex-wrap items-center justify-center gap-4"
+              </p>
+              <div
+                style={{ animationDelay: "0.36s" }}
+                className="hero-in mb-12 flex flex-wrap items-center justify-center gap-4"
               >
                 <a href="#contact-studio" className="inline-flex items-center gap-2 rounded-full bg-[#161412] px-8 py-3 text-[14px] font-semibold text-white shadow-[0_6px_20px_rgba(22,20,18,0.14)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-stone-800 hover:shadow-[0_10px_30px_rgba(22,20,18,0.22)] active:translate-y-0 active:scale-[0.98]">
                   <span>Start a Project</span>
@@ -254,16 +478,21 @@ export default function Home() {
                   <span>Explore Works</span>
                   <span className="material-symbols-outlined text-[18px]">arrow_downward</span>
                 </a>
-              </motion.div>
+              </div>
               <Stagger className="grid w-full max-w-4xl grid-cols-1 gap-4 pt-6 sm:grid-cols-3">
-                {METRICS.map((m) => (
-                  <StaggerItem key={m.title}>
+                {METRICS.map((m, idx) => (
+                  <StaggerItem key={m.sub} delay={idx * 0.08}>
                     <div className="flex items-center gap-4 rounded-xl border border-stone-200/80 bg-white p-6 text-left shadow-[0_4px_16px_rgba(22,20,18,0.03)] transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-                      <div className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl border transition-transform duration-300 group-hover:scale-110 ${m.bg}`}>
+                      <div className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl border transition-transform duration-300 hover:scale-110 ${m.bg}`}>
                         <span className="material-symbols-outlined text-2xl">{m.icon}</span>
                       </div>
                       <div className="flex flex-col">
-                        <span className="font-display text-[20px] font-semibold leading-7 text-[#161412]">{m.title}</span>
+                        <CountUp
+                          to={m.value}
+                          decimals={m.decimals}
+                          suffix={m.suffix}
+                          className="font-display text-[20px] font-semibold leading-7 tabular-nums text-[#161412]"
+                        />
                         <span className="text-[13px] leading-5 text-[#4F4A43]">{m.sub}</span>
                       </div>
                     </div>
@@ -277,7 +506,7 @@ export default function Home() {
           <div className="overflow-hidden border-b border-stone-200/60 bg-white/60 py-4 backdrop-blur">
             <div className="animate-marquee flex w-max items-center gap-8 pr-8">
               {[...MARQUEE, ...MARQUEE].map((t, i) => (
-                <span key={`${t}-${i}`} className="flex items-center gap-8 text-[12px] font-semibold uppercase tracking-[0.18em] text-stone-500">
+                <span key={`${t}-${i}`} className="flex items-center gap-8 text-[12px] font-semibold uppercase tracking-[0.18em] text-stone-600">
                   {t}
                   <span className="h-1.5 w-1.5 rounded-full bg-amber-600/70" />
                 </span>
@@ -299,9 +528,8 @@ export default function Home() {
               </p>
             </Reveal>
             <Stagger className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              {CAPABILITIES.map((c) => (
-                <StaggerItem key={c.title}>
-                <Tilt max={7}>
+              {CAPABILITIES.map((c, idx) => (
+                <StaggerItem key={c.title} delay={idx * 0.08}>
                 <div className="group flex h-full flex-col justify-between rounded-2xl border border-stone-200/80 bg-white p-8 shadow-[0_4px_20px_rgba(22,20,18,0.03)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(22,20,18,0.07)]">
                   <div className="mb-6 flex items-center justify-between">
                     <div className={`flex h-12 w-12 items-center justify-center rounded-xl border ${c.iconBg}`}>
@@ -316,8 +544,14 @@ export default function Home() {
                   <div className="zoom-img relative flex h-52 w-full items-center justify-center overflow-hidden rounded-xl border border-stone-200 bg-stone-50">
                     {c.img ? (
                       <>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img alt={c.title} src={c.img} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+                        <Image
+                          alt={c.title}
+                          src={c.img}
+                          fill
+                          loading="lazy"
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-cover"
+                        />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
                       </>
                     ) : (
@@ -331,7 +565,6 @@ export default function Home() {
                     )}
                   </div>
                 </div>
-                </Tilt>
                 </StaggerItem>
               ))}
             </Stagger>
@@ -370,31 +603,71 @@ export default function Home() {
                 <span className="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-1">east</span>
               </a>
             </Reveal>
-            <div className="flex flex-col gap-12">
-              {WORKS.map((w) => (
-                <Reveal key={w.title}>
-                <div className="group flex flex-col items-center gap-8 rounded-2xl border border-stone-200/90 bg-white p-6 shadow-[0_6px_24px_rgba(22,20,18,0.04)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(22,20,18,0.08)] md:p-12 lg:flex-row">
-                  <div className={`zoom-img relative h-72 w-full overflow-hidden rounded-xl border border-stone-200 bg-stone-100 md:h-96 lg:w-1/2 ${w.reverse ? "lg:order-2" : ""}`}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img alt={w.title} src={w.img} className="h-full w-full object-cover" loading="lazy" />
-                  </div>
-                  <div className={`flex w-full flex-col justify-center text-left lg:w-1/2 ${w.reverse ? "lg:order-1" : ""}`}>
-                    <div className="mb-4 flex flex-wrap items-center gap-2">
-                      {w.tags.map((t) => (
-                        <span key={t.label} className={`rounded-full border px-3 py-1 text-[11px] font-medium ${t.cls}`}>{t.label}</span>
-                      ))}
-                    </div>
-                    <h3 className="font-display mb-3 text-[28px] font-semibold leading-9 text-[#161412] md:text-[36px] md:leading-[44px]">{w.title}</h3>
-                    <p className="mb-6 text-[15px] text-[#4F4A43]">{w.desc}</p>
-                    <a href="#contact-studio" className={`group inline-flex items-center gap-2 text-[14px] font-semibold text-[#161412] transition-colors ${w.linkHover}`}>
-                      <span>View Case Study</span>
-                      <span className="material-symbols-outlined text-[18px] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5">north_east</span>
-                    </a>
-                  </div>
+            <Reveal>
+              <div className="relative">
+                <div
+                  ref={worksRef}
+                  className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                >
+                  {WORKS.map((w) => (
+                    <article
+                      key={w.title}
+                      className="group w-[86vw] shrink-0 snap-center overflow-hidden rounded-2xl border border-stone-200/90 bg-white shadow-[0_6px_24px_rgba(22,20,18,0.04)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(22,20,18,0.08)] sm:w-[58vw] lg:w-[calc(50%-12px)]"
+                    >
+                      <div className="zoom-img relative h-60 w-full overflow-hidden bg-stone-100 sm:h-72">
+                        <Image
+                          alt={w.title}
+                          src={w.img}
+                          fill
+                          loading="lazy"
+                          sizes="(max-width: 1024px) 100vw, 50vw"
+                          className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
+                      </div>
+                      <div className="flex flex-col p-6 md:p-8">
+                        <div className="mb-3 flex flex-wrap items-center gap-2">
+                          {w.tags.map((t) => (
+                            <span key={t.label} className={`rounded-full border px-3 py-1 text-[11px] font-medium ${t.cls}`}>
+                              {t.label}
+                            </span>
+                          ))}
+                        </div>
+                        <h3 className="font-display mb-2 text-[22px] font-semibold leading-8 text-[#161412] md:text-[26px] md:leading-9">
+                          {w.title}
+                        </h3>
+                        <p className="mb-4 text-[14px] leading-6 text-[#4F4A43]">{w.desc}</p>
+                        <a
+                          href="#contact-studio"
+                          className={`inline-flex items-center gap-2 text-[14px] font-semibold text-[#161412] transition-colors ${w.linkHover}`}
+                        >
+                          <span>View Case Study</span>
+                          <span className="material-symbols-outlined text-[18px] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+                            north_east
+                          </span>
+                        </a>
+                      </div>
+                    </article>
+                  ))}
                 </div>
-                </Reveal>
-              ))}
-            </div>
+                <div className="mt-2 flex items-center justify-center gap-4">
+                  <button
+                    onClick={() => scrollWorks(-1)}
+                    aria-label="Scroll works left"
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-stone-200 bg-white text-[#161412] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-amber-400 hover:shadow-md active:translate-y-0 active:scale-95"
+                  >
+                    <span className="material-symbols-outlined text-xl">arrow_back</span>
+                  </button>
+                  <button
+                    onClick={() => scrollWorks(1)}
+                    aria-label="Scroll works right"
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-stone-200 bg-white text-[#161412] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-amber-400 hover:shadow-md active:translate-y-0 active:scale-95"
+                  >
+                    <span className="material-symbols-outlined text-xl">arrow_forward</span>
+                  </button>
+                </div>
+              </div>
+            </Reveal>
           </section>
 
           {/* PROCESS */}
@@ -405,9 +678,8 @@ export default function Home() {
               <p className="mt-2 text-[15px] text-[#4F4A43]">No mysterious handoffs or convoluted bureaucracy. Just four purposeful stages from initial seedling to thriving scale.</p>
             </Reveal>
             <Stagger className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-              {STEPS.map((s) => (
-                <StaggerItem key={s.title}>
-                <Tilt max={10}>
+              {STEPS.map((s, idx) => (
+                <StaggerItem key={s.title} delay={idx * 0.08}>
                 <div className={`group flex h-full flex-col justify-between rounded-2xl border border-stone-200/80 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${s.hoverBorder}`}>
                   <div>
                     <div className="mb-4 flex items-center justify-between">
@@ -422,7 +694,6 @@ export default function Home() {
                     <span className="material-symbols-outlined text-lg transition-transform duration-300 group-hover:translate-x-1">{s.footIcon}</span>
                   </div>
                 </div>
-                </Tilt>
                 </StaggerItem>
               ))}
             </Stagger>
@@ -431,11 +702,7 @@ export default function Home() {
           {/* PARTNERSHIP */}
           <section className="mx-auto w-full max-w-7xl px-5 py-12 md:px-14">
             <Reveal>
-            <motion.div
-              whileHover={{ scale: 1.005 }}
-              transition={{ type: "spring", stiffness: 200, damping: 22 }}
-              className="relative overflow-hidden rounded-3xl border border-stone-200/90 bg-[#F5F2EC] p-8 md:p-16"
-            >
+            <div className="relative overflow-hidden rounded-3xl border border-stone-200/90 bg-[#F5F2EC] p-8 md:p-16">
               <div className="mb-12 max-w-2xl">
                 <span className="text-[12px] font-semibold uppercase tracking-widest text-amber-700">The Partnership</span>
                 <h2 className="font-display mt-1 text-[28px] font-semibold leading-9 text-[#161412] md:text-[36px] md:leading-[44px]">Why founders and product leaders trust Yantram.</h2>
@@ -444,15 +711,15 @@ export default function Home() {
               <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
                 {VALUES.map((v) => (
                   <div key={v.title} className="group flex flex-col gap-2 transition-transform duration-300 hover:-translate-y-1">
-                    <div className={`mb-1 flex h-10 w-10 items-center justify-center rounded-xl border border-stone-200 bg-white shadow-sm transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 ${v.color}`}>
+                    <div className={`mb-1 flex h-10 w-10 items-center justify-center rounded-xl border border-stone-200 bg-white shadow-sm transition-transform duration-300 group-hover:-translate-y-0.5 ${v.color}`}>
                       <span className="material-symbols-outlined text-xl">{v.icon}</span>
                     </div>
-                    <h4 className="font-display text-[20px] font-semibold leading-7 text-[#161412]">{v.title}</h4>
+                    <h3 className="font-display text-[20px] font-semibold leading-7 text-[#161412]">{v.title}</h3>
                     <p className="text-[13px] leading-5 text-[#4F4A43]">{v.desc}</p>
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
             </Reveal>
           </section>
 
@@ -472,22 +739,14 @@ export default function Home() {
               <p className="mb-8 max-w-xl text-[18px] leading-7 text-[#4F4A43]">
                 Whether you are shaping an ambitious new venture from zero or revitalizing an essential product, we would love to listen.
               </p>
+              <InquiryForm />
               <div className="mb-6 flex flex-col items-center gap-4 sm:flex-row">
-                <motion.a
-                  href="mailto:hello@yantramstudio.com"
-                  whileHover={{ y: -2, scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="inline-flex items-center gap-2 rounded-full bg-[#161412] px-8 py-3.5 text-[14px] font-semibold text-white shadow-lg transition-colors duration-300 hover:bg-stone-800"
-                >
-                  <span>Start a Conversation</span>
-                  <span className="material-symbols-outlined text-[18px]">north_east</span>
-                </motion.a>
                 <button onClick={copyEmail} className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-stone-100 px-6 py-3 text-[12px] font-semibold text-[#161412] transition-all duration-300 hover:-translate-y-0.5 hover:bg-stone-200 active:translate-y-0 active:scale-[0.98]">
                   <span className="material-symbols-outlined text-[16px]">content_copy</span>
                   <span>{copied ? "Copied to Clipboard!" : "Copy Email Address"}</span>
                 </button>
               </div>
-              <p className="text-[13px] text-stone-500">
+              <p className="text-[13px] text-stone-600">
                 Direct studio desk: <span className="font-medium text-[#161412]">hello@yantramstudio.com</span> • Typical response within 24 hours
               </p>
             </div>
@@ -512,7 +771,7 @@ export default function Home() {
             <a href="#ethos" className="text-[12px] font-semibold text-[#4F4A43] transition-colors duration-200 hover:text-[#161412]">Atelier Ethos</a>
             <a href="#" className="text-[12px] font-semibold text-[#4F4A43] transition-colors duration-200 hover:text-[#161412]">Privacy &amp; Terms</a>
           </div>
-          <div className="text-[13px] text-stone-500">© 2024 Yantram Studio. Rooted in natural precision.</div>
+          <div className="text-[13px] text-stone-600">© 2024 Yantram Studio. Rooted in natural precision.</div>
         </div>
       </footer>
     </div>
