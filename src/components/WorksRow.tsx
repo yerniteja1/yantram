@@ -5,44 +5,138 @@ import Image from "next/image";
 import Icon from "@/components/Icon";
 import { Reveal } from "@/components/Reveal";
 
-// NOTE: these are design & engineering concepts shown to illustrate
-// capability — not client engagements. No metrics here are client results.
+// Live client-ready demos built by Yantram — each card links to the
+// deployed demo site.
 const WORKS = [
   {
     tags: [
-      { label: "Web Application", cls: "bg-amber-50 border-amber-200/60 text-amber-800" },
-      { label: "Demo Concept", cls: "bg-stone-100 border-stone-200/80 text-stone-700" },
+      { label: "Auto Services", cls: "bg-amber-50 border-amber-200/60 text-amber-800" },
+      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
     ],
-    title: "Lumina — Team Workspace Concept",
-    what: "A calm workspace concept where design teams organize projects and collaborate.",
-    built: "What Yantram built: dashboard UI, project workspaces, and frontend architecture.",
-    highlights: "Highlights: responsive web app, clean component system, API-ready data layer.",
-    img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80&auto=format&fit=crop",
+    title: "TORQ — Auto Care Website",
+    what: "A mobile-first website for an auto service garage: services, pricing, reviews, and location.",
+    built: "What Yantram built: service catalog, WhatsApp booking flow, and admin-editable content.",
+    highlights: "Highlights: responsive design, instant WhatsApp enquiries. Concept demo, not a client engagement.",
+    img: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=1200&q=80&auto=format&fit=crop",
+    href: "https://torq.yerni.online",
     linkHover: "hover:text-amber-700",
   },
   {
     tags: [
-      { label: "Mobile App", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
-      { label: "Demo Concept", cls: "bg-stone-100 border-stone-200/80 text-stone-700" },
+      { label: "Fitness", cls: "bg-amber-50 border-amber-200/60 text-amber-800" },
+      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
     ],
-    title: "Haven Health — Care Coordination Concept",
-    what: "A patient-friendly concept for appointments, practitioner messaging, and care plans.",
-    built: "What Yantram built: cross-platform app flows, appointment and messaging UI.",
-    highlights: "Highlights: accessible UX, maintainable mobile architecture, secure-by-design patterns.",
-    img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80&auto=format&fit=crop",
+    title: "FORGE — Gym & Fitness Website",
+    what: "A high-energy site for a gym: membership plans, trainers, gallery, and class schedules.",
+    built: "What Yantram built: membership tiers, trainer profiles, and WhatsApp trial booking.",
+    highlights: "Highlights: bold mobile-first design, plan comparison. Concept demo, not a client engagement.",
+    img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&q=80&auto=format&fit=crop",
+    href: "https://forgegym.yerni.online",
     linkHover: "hover:text-emerald-700",
   },
   {
     tags: [
-      { label: "E-commerce", cls: "bg-stone-100 border-stone-200/80 text-stone-800" },
-      { label: "Demo Concept", cls: "bg-stone-100 border-stone-200/80 text-stone-700" },
+      { label: "Salon & Spa", cls: "bg-amber-50 border-amber-200/60 text-amber-800" },
+      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
     ],
-    title: "Solis Pay — Checkout Experience Concept",
-    what: "A frictionless checkout concept for independent sellers and digital goods.",
-    built: "What Yantram built: storefront UI with cart and checkout flows.",
-    highlights: "Highlights: payments-ready integration patterns, catalog and order workflows.",
-    img: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80&auto=format&fit=crop",
+    title: "GLOW — Salon Booking Website",
+    what: "An elegant site for a beauty salon: services with pricing, stylists, gallery, and reviews.",
+    built: "What Yantram built: service menu, appointment booking over WhatsApp, and offer banners.",
+    highlights: "Highlights: category tabs, search, instant booking. Concept demo, not a client engagement.",
+    img: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1200&q=80&auto=format&fit=crop",
+    href: "https://glowsalon.yerni.online",
     linkHover: "hover:text-amber-700",
+  },
+  {
+    tags: [
+      { label: "Restaurant", cls: "bg-amber-50 border-amber-200/60 text-amber-800" },
+      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+    ],
+    title: "KORA — Restaurant Website",
+    what: "An appetizing site for a restaurant: full menu with prices, gallery, reviews, and table booking.",
+    built: "What Yantram built: menu with categories, table reservation flow, and location with maps.",
+    highlights: "Highlights: menu-first mobile UX, one-tap table booking. Concept demo, not a client engagement.",
+    img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&q=80&auto=format&fit=crop",
+    href: "https://kora.yerni.online",
+    linkHover: "hover:text-emerald-700",
+  },
+  {
+    tags: [
+      { label: "Events & Venues", cls: "bg-stone-100 border-stone-200/80 text-stone-800" },
+      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+    ],
+    title: "VAIBHAV — Banquet Hall Website",
+    what: "A grand site for an event venue: halls, packages with starting prices, gallery, and date planner.",
+    built: "What Yantram built: hall listings, package cards, and event enquiry over WhatsApp.",
+    highlights: "Highlights: package comparison, event-date planner. Concept demo, not a client engagement.",
+    img: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1200&q=80&auto=format&fit=crop",
+    href: "https://vaibhav.yerni.online",
+    linkHover: "hover:text-amber-700",
+  },
+  {
+    tags: [
+      { label: "Hotel & Hospitality", cls: "bg-stone-100 border-stone-200/80 text-stone-800" },
+      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+    ],
+    title: "THE BAY — Hotel Website",
+    what: "A premium site for a hotel: rooms with nightly rates, amenities, gallery, and booking enquiries.",
+    built: "What Yantram built: room listings, amenity highlights, and WhatsApp reservation flow.",
+    highlights: "Highlights: room showcase, date-wise enquiry. Concept demo, not a client engagement.",
+    img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80&auto=format&fit=crop",
+    href: "https://bayhotel.yerni.online",
+    linkHover: "hover:text-emerald-700",
+  },
+  {
+    tags: [
+      { label: "Healthcare", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+    ],
+    title: "SMILECRAFT — Dental Clinic Website",
+    what: "A trustworthy site for a dental clinic: treatments with starting prices, doctors, and appointment booking.",
+    built: "What Yantram built: treatment catalog, doctor profiles, and WhatsApp appointment flow.",
+    highlights: "Highlights: treatment guides, patient reviews. Concept demo, not a client engagement.",
+    img: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1200&q=80&auto=format&fit=crop",
+    href: "https://smilecraft.yerni.online",
+    linkHover: "hover:text-amber-700",
+  },
+  {
+    tags: [
+      { label: "Pet Care + Shop", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+    ],
+    title: "PAWSOME — Pet Care & Shop",
+    what: "A friendly site for pet care: services, adoptable pets, product shop with search, and order over WhatsApp.",
+    built: "What Yantram built: service bookings, pet listings, and a mini shop with category tabs.",
+    highlights: "Highlights: shop with search and filters, WhatsApp ordering. Concept demo, not a client engagement.",
+    img: "https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=1200&q=80&auto=format&fit=crop",
+    href: "https://pawsomepet.yerni.online",
+    linkHover: "hover:text-emerald-700",
+  },
+  {
+    tags: [
+      { label: "Real Estate", cls: "bg-stone-100 border-stone-200/80 text-stone-800" },
+      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+    ],
+    title: "NEST — Realty Listings Website",
+    what: "A clean site for a realtor: property listings with prices, filters, gallery, and site-visit booking.",
+    built: "What Yantram built: searchable listings, price filters, and WhatsApp site-visit scheduling.",
+    highlights: "Highlights: buy/rent filters, price sorting. Concept demo, not a client engagement.",
+    img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80&auto=format&fit=crop",
+    href: "https://nestreality.yerni.online",
+    linkHover: "hover:text-amber-700",
+  },
+  {
+    tags: [
+      { label: "Jobs & Hiring", cls: "bg-stone-100 border-stone-200/80 text-stone-800" },
+      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+    ],
+    title: "RIGHTJOB — Job Consultancy Website",
+    what: "A professional site for a job consultancy: openings with salary ranges, candidate stories, and applications.",
+    built: "What Yantram built: job listings, application flow over WhatsApp, and trust-building reviews.",
+    highlights: "Highlights: salary-first listings, one-tap apply. Concept demo, not a client engagement.",
+    img: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200&q=80&auto=format&fit=crop",
+    href: "https://jobconsultancy.yerni.online",
+    linkHover: "hover:text-emerald-700",
   },
 ];
 
@@ -60,7 +154,7 @@ export default function WorksRow() {
         <div>
           <span className="text-[12px] font-semibold uppercase tracking-widest text-amber-700">Selected Work</span>
           <h2 className="font-display mt-1 text-[28px] font-semibold leading-9 text-[#161412] md:text-[36px] md:leading-[44px]">Digital products designed and engineered with care.</h2>
-          <p className="mt-2 max-w-xl text-[14px] leading-6 text-[#4F4A43]">Design and engineering concepts showing how we work — ask us about real client projects on a call.</p>
+          <p className="mt-2 max-w-xl text-[14px] leading-6 text-[#4F4A43]">Live demos of real small-business websites we build — open one, then ask us for the same for your business.</p>
         </div>
         <a href="#contact" className="group inline-flex shrink-0 items-center gap-2 text-[14px] font-semibold text-[#161412] transition-colors hover:text-amber-700">
           <span>Start a similar project</span>
@@ -104,10 +198,12 @@ export default function WorksRow() {
                   <p className="mb-1 text-[14px] leading-6 text-[#4F4A43]">{w.built}</p>
                   <p className="mb-4 text-[14px] leading-6 text-[#4F4A43]">{w.highlights}</p>
                   <a
-                    href="#contact"
+                    href={w.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className={`inline-flex items-center gap-2 text-[14px] font-semibold text-[#161412] transition-colors ${w.linkHover}`}
                   >
-                      <span>Discuss a similar build</span>
+                      <span>View live demo</span>
                       <Icon name="arrow-up-right" className="text-[18px] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </a>
                 </div>
