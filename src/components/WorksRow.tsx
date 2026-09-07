@@ -179,6 +179,19 @@ const WORKS = [
     href: "https://jobconsultancy.yerni.online",
     linkHover: "hover:text-emerald-700",
   },
+  {
+    tags: [
+      { label: "Healthcare", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+    ],
+    title: "LIFELINE — Diagnostics Lab Website",
+    what: "A trustworthy site for a diagnostic lab: searchable test catalogue, health packages, and home sample collection.",
+    built: "What Yantram built: test search with report times, package cards, and WhatsApp home-collection booking.",
+    highlights: "Highlights: search-first test finder, home/lab visit toggle. Concept demo, not a client engagement.",
+    img: "/images/work/lifeline-diagnostics.jpg",
+    href: "https://lifeline.yerni.online",
+    linkHover: "hover:text-amber-700",
+  },
 ];
 
 export default function WorksRow() {
