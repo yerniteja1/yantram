@@ -192,6 +192,19 @@ const WORKS = [
     href: "https://lifeline.yerni.online",
     linkHover: "hover:text-amber-700",
   },
+  {
+    tags: [
+      { label: "Travel & Tours", cls: "bg-stone-100 border-stone-200/80 text-stone-800" },
+      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+    ],
+    title: "YATRI — Travel Agency Website",
+    what: "A vibrant site for a travel agency: tour packages with prices, filters, itineraries, gallery, and trip planning.",
+    built: "What Yantram built: searchable packages, day-wise itinerary views, and WhatsApp trip planning flow.",
+    highlights: "Highlights: destination/budget filters, itinerary modal. Concept demo, not a client engagement.",
+    img: "/images/work/yatri-travel.jpg",
+    href: "https://yatri.yerni.online",
+    linkHover: "hover:text-emerald-700",
+  },
 ];
 
 export default function WorksRow() {
