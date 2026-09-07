@@ -205,6 +205,19 @@ const WORKS = [
     href: "https://yatri.yerni.online",
     linkHover: "hover:text-emerald-700",
   },
+  {
+    tags: [
+      { label: "Wedding & Events", cls: "bg-stone-100 border-stone-200/80 text-stone-800" },
+      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+    ],
+    title: "IMPRESSIONS — Wedding Studio Website",
+    what: "A visually rich site for a wedding studio: service portfolio, pricing, gallery, and wedding planning enquiry.",
+    built: "What Yantram built: service catalog with categories, gallery lightbox, and WhatsApp wedding planning flow.",
+    highlights: "Highlights: category filters, budget slider, plan-my-wedding form. Concept demo, not a client engagement.",
+    img: "/images/work/wedding-event.jpg",
+    href: "https://wedding.yerni.online",
+    linkHover: "hover:text-amber-700",
+  },
 ];
 
 export default function WorksRow() {
