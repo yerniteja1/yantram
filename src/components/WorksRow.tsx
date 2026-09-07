@@ -7,7 +7,74 @@ import { Reveal } from "@/components/Reveal";
 
 // Live client-ready demos built by Yantram — each card links to the
 // deployed demo site.
+// Order: KORA, PAWSOME, SUVIDYA, SMILECRAFT first, then SCHOOLOS
+// (education companion to Suvidya), then the rest in their prior order.
 const WORKS = [
+  {
+    tags: [
+      { label: "Restaurant", cls: "bg-amber-50 border-amber-200/60 text-amber-800" },
+      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+    ],
+    title: "KORA — Restaurant Website",
+    what: "An appetizing site for a restaurant: full menu with prices, gallery, reviews, and table booking.",
+    built: "What Yantram built: menu with categories, table reservation flow, and location with maps.",
+    highlights: "Highlights: menu-first mobile UX, one-tap table booking. Concept demo, not a client engagement.",
+    img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&q=80&auto=format&fit=crop",
+    href: "https://kora.yerni.online",
+    linkHover: "hover:text-emerald-700",
+  },
+  {
+    tags: [
+      { label: "Pet Care + Shop", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+    ],
+    title: "PAWSOME — Pet Care & Shop",
+    what: "A friendly site for pet care: services, adoptable pets, product shop with search, and order over WhatsApp.",
+    built: "What Yantram built: service bookings, pet listings, and a mini shop with category tabs.",
+    highlights: "Highlights: shop with search and filters, WhatsApp ordering. Concept demo, not a client engagement.",
+    img: "https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=1200&q=80&auto=format&fit=crop",
+    href: "https://pawsomepet.yerni.online",
+    linkHover: "hover:text-emerald-700",
+  },
+  {
+    tags: [
+      { label: "Education", cls: "bg-amber-50 border-amber-200/60 text-amber-800" },
+      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+    ],
+    title: "SUVIDYA — School Website",
+    what: "A warm, trustworthy site for a school: story, campus life, results wall, and parent enquiries.",
+    built: "What Yantram built: Book Campus Visit flow, admission enquiry over WhatsApp, and admin-editable content.",
+    highlights: "Highlights: parent-first storytelling, visit-slot booking. Concept demo, not a client engagement.",
+    img: "https://images.unsplash.com/photo-1509062522246-3755977927-d7f853975d54?w=1200&q=80&auto=format&fit=crop",
+    href: "https://suvidya.yerni.online",
+    linkHover: "hover:text-amber-700",
+  },
+  {
+    tags: [
+      { label: "Healthcare", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+    ],
+    title: "SMILECRAFT — Dental Clinic Website",
+    what: "A trustworthy site for a dental clinic: treatments with starting prices, doctors, and appointment booking.",
+    built: "What Yantram built: treatment catalog, doctor profiles, and WhatsApp appointment flow.",
+    highlights: "Highlights: treatment guides, patient reviews. Concept demo, not a client engagement.",
+    img: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1200&q=80&auto=format&fit=crop",
+    href: "https://smilecraft.yerni.online",
+    linkHover: "hover:text-amber-700",
+  },
+  {
+    tags: [
+      { label: "Education SaaS", cls: "bg-amber-50 border-amber-200/60 text-amber-800" },
+      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+    ],
+    title: "SCHOOLOS — School Management Platform",
+    what: "An operational dashboard for schools: students, attendance, exams, notices, transport, and parent views.",
+    built: "What Yantram built: live attendance, marks entry with analytics, and Principal / Teacher / Parent role views.",
+    highlights: "Highlights: companion to Suvidya — one sells the school, the other runs it. Concept demo, not a client engagement.",
+    img: "https://images.unsplash.com/photo-1503676260728-1c4235f76355?w=1200&q=80&auto=format&fit=crop",
+    href: "https://schoolos.yerni.online",
+    linkHover: "hover:text-emerald-700",
+  },
   {
     tags: [
       { label: "Auto Services", cls: "bg-amber-50 border-amber-200/60 text-amber-800" },
@@ -49,19 +116,6 @@ const WORKS = [
   },
   {
     tags: [
-      { label: "Restaurant", cls: "bg-amber-50 border-amber-200/60 text-amber-800" },
-      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
-    ],
-    title: "KORA — Restaurant Website",
-    what: "An appetizing site for a restaurant: full menu with prices, gallery, reviews, and table booking.",
-    built: "What Yantram built: menu with categories, table reservation flow, and location with maps.",
-    highlights: "Highlights: menu-first mobile UX, one-tap table booking. Concept demo, not a client engagement.",
-    img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&q=80&auto=format&fit=crop",
-    href: "https://kora.yerni.online",
-    linkHover: "hover:text-emerald-700",
-  },
-  {
-    tags: [
       { label: "Events & Venues", cls: "bg-stone-100 border-stone-200/80 text-stone-800" },
       { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
     ],
@@ -84,32 +138,6 @@ const WORKS = [
     highlights: "Highlights: room showcase, date-wise enquiry. Concept demo, not a client engagement.",
     img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80&auto=format&fit=crop",
     href: "https://bayhotel.yerni.online",
-    linkHover: "hover:text-emerald-700",
-  },
-  {
-    tags: [
-      { label: "Healthcare", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
-      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
-    ],
-    title: "SMILECRAFT — Dental Clinic Website",
-    what: "A trustworthy site for a dental clinic: treatments with starting prices, doctors, and appointment booking.",
-    built: "What Yantram built: treatment catalog, doctor profiles, and WhatsApp appointment flow.",
-    highlights: "Highlights: treatment guides, patient reviews. Concept demo, not a client engagement.",
-    img: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1200&q=80&auto=format&fit=crop",
-    href: "https://smilecraft.yerni.online",
-    linkHover: "hover:text-amber-700",
-  },
-  {
-    tags: [
-      { label: "Pet Care + Shop", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
-      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
-    ],
-    title: "PAWSOME — Pet Care & Shop",
-    what: "A friendly site for pet care: services, adoptable pets, product shop with search, and order over WhatsApp.",
-    built: "What Yantram built: service bookings, pet listings, and a mini shop with category tabs.",
-    highlights: "Highlights: shop with search and filters, WhatsApp ordering. Concept demo, not a client engagement.",
-    img: "https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=1200&q=80&auto=format&fit=crop",
-    href: "https://pawsomepet.yerni.online",
     linkHover: "hover:text-emerald-700",
   },
   {
