@@ -77,6 +77,19 @@ const WORKS = [
   },
   {
     tags: [
+      { label: "Education", cls: "bg-amber-50 border-amber-200/60 text-amber-800" },
+      { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
+    ],
+    title: "NEXTSTEP — Coaching Academy Website",
+    what: "A rank-focused site for a coaching institute: courses, batch finder, mentors, results wall, and demo class booking.",
+    built: "What Yantram built: Find Your Batch widget, course tracks, and WhatsApp demo booking flow.",
+    highlights: "Highlights: batch matching by class/subject/mode, topper results. Concept demo, not a client engagement.",
+    img: "/images/work/nextstep-academy.jpg",
+    href: "https://nextstep.yerni.online",
+    linkHover: "hover:text-amber-700",
+  },
+  {
+    tags: [
       { label: "Auto Services", cls: "bg-amber-50 border-amber-200/60 text-amber-800" },
       { label: "Live Demo", cls: "bg-emerald-50 border-emerald-200/60 text-emerald-800" },
     ],
