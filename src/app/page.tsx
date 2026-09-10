@@ -165,9 +165,11 @@ export default function Home() {
               </div>
               <h1
                 style={{ animationDelay: "0.18s" }}
-                className="hero-in font-display mx-auto mb-4 max-w-4xl text-[36px] font-bold leading-[44px] tracking-tight text-[#161412] md:text-[56px] md:leading-[64px]"
+                className="hero-in font-display mx-auto mb-4 max-w-4xl text-[36px] font-bold leading-[44px] tracking-tight md:text-[56px] md:leading-[64px]"
               >
-                BUILD STEADY. <span className="italic font-serif text-amber-700">RISE FAST.</span>
+                <span style={{ color: "#5840F0" }}>BUILD.</span>{" "}
+                <span style={{ color: "#7C3AED" }}>LEARN.</span>{" "}
+                <span style={{ color: "#F97316" }}>RISE.</span>
               </h1>
               <p
                 style={{ animationDelay: "0.28s" }}
@@ -289,14 +291,18 @@ export default function Home() {
               <p className="mx-auto mb-10 max-w-2xl text-[18px] leading-7 text-[#4F4A43]">
                 Human thinking first, engineering discipline always. We use modern technology — and AI as a tool, not a shortcut — to build systems that stay maintainable for years.
               </p>
-              <div className="mx-auto mb-10 grid max-w-3xl grid-cols-1 gap-4 text-left sm:grid-cols-2">
+              <div className="mx-auto mb-10 grid max-w-3xl grid-cols-1 gap-4 text-left sm:grid-cols-3">
                 <div className="rounded-2xl border border-stone-200/80 bg-white p-6 shadow-sm">
-                  <p className="font-display mb-2 text-[15px] font-bold uppercase tracking-wider text-amber-700">Build Steady</p>
+                  <p className="font-display mb-2 text-[15px] font-bold uppercase tracking-wider text-amber-700">BUILD</p>
                   <p className="text-[14px] leading-6 text-[#4F4A43]">Strong foundations, clean architecture, reliability, security, and maintainability — the parts nobody sees, everybody feels.</p>
                 </div>
                 <div className="rounded-2xl border border-stone-200/80 bg-white p-6 shadow-sm">
-                  <p className="font-display mb-2 text-[15px] font-bold uppercase tracking-wider text-emerald-800">Rise Fast</p>
-                  <p className="text-[14px] leading-6 text-[#4F4A43]">Rapid iteration, modern tools, AI-assisted development, experimentation, shipping, and growth — momentum without the mess.</p>
+                  <p className="font-display mb-2 text-[15px] font-bold uppercase tracking-wider text-emerald-800">LEARN</p>
+                  <p className="text-[14px] leading-6 text-[#4F4A43]">Continuous improvement, modern tools, AI-assisted development, experimentation, and knowledge sharing — growth through learning.</p>
+                </div>
+                <div className="rounded-2xl border border-stone-200/80 bg-white p-6 shadow-sm">
+                  <p className="font-display mb-2 text-[15px] font-bold uppercase tracking-wider text-stone-800">RISE</p>
+                  <p className="text-[14px] leading-6 text-[#4F4A43]">Rapid iteration, shipping, and growth — momentum without the mess, delivering results that scale.</p>
                 </div>
               </div>
               <div className="flex flex-wrap items-center justify-center gap-8 text-[14px] font-semibold text-stone-700">
