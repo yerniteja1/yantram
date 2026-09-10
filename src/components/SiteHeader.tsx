@@ -61,13 +61,12 @@ export default function SiteHeader() {
       >
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 md:px-14">
           <a href="#" className="group flex items-center gap-4" onClick={() => setMenuOpen(false)}>
-            <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-stone-200 bg-white p-1 shadow-sm transition-transform duration-300 group-hover:scale-105">
-              <LogoImage src="/apple-touch-icon.png" alt="Yantram logo" size="h-7 w-7" priority />
-            </div>
-            <span className="flex flex-col leading-none">
-              <span className="font-display text-[20px] font-bold uppercase tracking-wider text-[#161412]">Yantram</span>
+            
+              <LogoImage src="/images/logo/primary-light-t.png" alt="Yerni logo" size="h-16" priority />
+            {/* <span className="hidden flex-col leading-none sm:flex">
+              <span className="font-display text-[20px] font-bold uppercase tracking-wider text-[#161412]">Yerni</span>
               <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-stone-500">Digital Product Studio</span>
-            </span>
+            </span> */}
           </a>
           <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
             {NAV.map((l) => (

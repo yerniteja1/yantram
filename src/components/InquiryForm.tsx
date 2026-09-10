@@ -68,7 +68,7 @@ export default function InquiryForm() {
     setErrors(errs);
     if (Object.keys(errs).length > 0) return;
 
-    // Try delivering directly to the Yantram inbox first (no backend needed).
+    // Try delivering directly to the Yerni inbox first (no backend needed).
     setSending(true);
     try {
       const res = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {

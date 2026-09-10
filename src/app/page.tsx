@@ -115,7 +115,7 @@ const VALUES = [
   { icon: "users", color: "text-amber-700", title: "Direct Collaboration", desc: "Clients work directly with the people building the product." },
   { icon: "languages", color: "text-emerald-800", title: "Clear Communication", desc: "Technical decisions, trade-offs, scope, and progress are explained clearly." },
   { icon: "calendar", color: "text-stone-800", title: "Transparent Milestones", desc: "Every project has visible milestones, priorities, and delivery expectations." },
-  { icon: "heart", color: "text-amber-700", title: "Long-Term Support", desc: "Yantram can continue maintaining, improving, and evolving the product after launch." },
+  { icon: "heart", color: "text-amber-700", title: "Long-Term Support", desc: "Yerni can continue maintaining, improving, and evolving the product after launch." },
   { icon: "shield-check", color: "text-emerald-800", title: "Production-Minded Engineering", desc: "Built with performance, maintainability, security, testing, and future change in mind." },
 ] as const;
 
@@ -152,16 +152,16 @@ export default function Home() {
             <section className="relative mx-auto flex max-w-7xl flex-col items-center px-5 pb-12 pt-12 text-center md:px-14 md:pb-16 md:pt-24">
               <div className="hero-in group relative mb-6">
                 <div className="absolute -inset-3 rounded-2xl bg-gradient-to-tr from-amber-200/40 via-stone-200/50 to-emerald-200/40 opacity-80 blur-lg transition-opacity duration-700 group-hover:opacity-100" />
-                <div className="animate-float relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-2xl border border-stone-200/80 bg-white p-2 shadow-[0_12px_32px_rgba(22,20,18,0.06)] transition-transform duration-500 hover:scale-105 md:h-28 md:w-28">
-                  <LogoImage src="/apple-touch-icon.png" alt="Yantram — Digital Product Studio monogram" size="h-20 w-20 md:h-24 md:w-24" priority />
+                <div className="animate-float relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-2xl transition-transform duration-500 hover:scale-105 md:h-28 md:w-28">
+                  <LogoImage src="/images/logo/brandmark-t.png" alt="Yerni brand mark" size="h-20 w-20 md:h-24 md:w-24" priority />
                 </div>
               </div>
-              <div
-                style={{ animationDelay: "0.1s" }}
+<div
+                style={{ animationDelay: "0.18s" }}
                 className="hero-in mb-4 inline-flex items-center gap-3 rounded-full border border-stone-200 bg-white px-4 py-1.5 text-[12px] font-semibold uppercase tracking-wider text-stone-800 shadow-sm"
               >
                 <span className="h-2 w-2 animate-pulse rounded-full bg-amber-600" />
-                <span>Yantram — Digital Product Studio</span>
+                <span>Yerni — Digital Product Studio</span>
               </div>
               <h1
                 style={{ animationDelay: "0.18s" }}
@@ -173,7 +173,7 @@ export default function Home() {
                 style={{ animationDelay: "0.28s" }}
                 className="hero-in mx-auto mb-8 max-w-2xl text-[18px] leading-7 text-[#4F4A43]"
               >
-                Yantram is a digital product studio building websites, mobile apps, backend systems, e-commerce platforms, and AI-powered products.
+                Yerni is a digital product studio building websites, mobile apps, backend systems, e-commerce platforms, and AI-powered products.
               </p>
               <div
                 style={{ animationDelay: "0.36s" }}
@@ -230,7 +230,7 @@ export default function Home() {
                 </h2>
               </div>
               <p className="max-w-md text-[15px] text-[#4F4A43]">
-                Yantram designs, builds, launches, and maintains digital products — from first prototype to long-term infrastructure.
+                Yerni designs, builds, launches, and maintains digital products — from first prototype to long-term infrastructure.
               </p>
             </Reveal>
             <Stagger className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -344,9 +344,9 @@ export default function Home() {
             <Reveal>
             <div className="relative overflow-hidden rounded-3xl border border-stone-200/90 bg-[#F5F2EC] p-8 md:p-16">
               <div className="mb-12 max-w-2xl">
-                <span className="text-[12px] font-semibold uppercase tracking-widest text-amber-700">Why Yantram</span>
+                <span className="text-[12px] font-semibold uppercase tracking-widest text-amber-700">Why Yerni</span>
                 <h2 className="font-display mt-1 text-[28px] font-semibold leading-9 text-[#161412] md:text-[36px] md:leading-[44px]">A product partner, not just a vendor.</h2>
-                <p className="mt-2 text-[15px] text-[#4F4A43]">Why founders and product teams trust Yantram: clear communication, visible milestones, and production-minded engineering — from first commit to long-term maintenance.</p>
+                <p className="mt-2 text-[15px] text-[#4F4A43]">Why founders and product teams trust Yerni: clear communication, visible milestones, and production-minded engineering — from first commit to long-term maintenance.</p>
               </div>
               <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {VALUES.map((v) => (
@@ -410,14 +410,13 @@ export default function Home() {
       <footer className="relative z-10 mt-auto w-full border-t border-stone-200/90 bg-[#F5F2EC] py-12">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-5 text-center md:flex-row md:px-14 md:text-left">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-stone-200 bg-white p-1 shadow-sm">
-              <LogoImage src="/favicon-32x32.png" alt="Yantram logo" size="h-7 w-7" />
-            </div>
+
+              <LogoImage src="/images/logo/brandmark-t.png" alt="Yerni logo" size="h-20 w-20" />
             <div className="flex flex-col gap-1">
-              <span className="font-display text-[20px] font-bold uppercase tracking-wider text-[#161412]">Yantram</span>
+              <span className="font-display text-[20px] font-bold uppercase tracking-wider text-[#161412]">Yerni</span>
               <span className="text-[11px] font-semibold uppercase tracking-widest text-stone-500">Digital Product Studio</span>
               <p className="max-w-sm text-[13px] text-[#4F4A43]">Building and evolving websites, mobile apps, backend systems, and AI-powered digital products.</p>
-              <p className="text-[12px] font-semibold uppercase tracking-widest text-stone-600">Build Steady. Rise Fast.</p>
+              <p className="text-[12px] font-semibold uppercase tracking-widest text-stone-600">BUILD. LEARN. RISE.</p>
               <p className="text-[13px] text-[#4F4A43]">
                 <a href={`mailto:${CONTACT_EMAIL}`} className="underline-offset-4 hover:text-[#161412] hover:underline">
                   {CONTACT_EMAIL}
@@ -437,7 +436,7 @@ export default function Home() {
             <a href="#" className="text-[12px] font-semibold text-[#4F4A43] transition-colors duration-200 hover:text-[#161412]">Privacy</a>
             <a href="#" className="text-[12px] font-semibold text-[#4F4A43] transition-colors duration-200 hover:text-[#161412]">Terms</a>
           </div>
-          <div className="text-[13px] text-stone-600">© 2026 Yantram. Build steady. Rise fast.</div>
+          <div className="text-[13px] text-stone-600">© 2026 Yerni. BUILD. LEARN. RISE.</div>
         </div>
       </footer>
     </div>

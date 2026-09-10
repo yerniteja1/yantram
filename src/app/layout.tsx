@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   keywords: [
-    "Yantram",
+    "Yerni",
     "digital product studio",
     "web development",
     "mobile app development",
@@ -55,11 +55,11 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   icons: {
     icon: [
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicon.ico" },
+      { url: "/images/logo/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/images/logo/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/images/logo/favicon.ico" },
     ],
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    apple: [{ url: "/images/logo/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
   manifest: "/site.webmanifest",
   openGraph: {
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     images: [
       {
-        url: "/android-chrome-512x512.png",
+        url: "/images/logo/android-chrome-512x512.png",
         width: 512,
         height: 512,
         alt: `${SITE_NAME} logo`,
@@ -81,12 +81,12 @@ export const metadata: Metadata = {
     card: "summary",
     title: `${SITE_NAME} — ${SITE_DESCRIPTOR}`,
     description: SITE_DESCRIPTION,
-    images: ["/android-chrome-512x512.png"],
+    images: ["/images/logo/android-chrome-512x512.png"],
   },
 };
 
 // Structured data: helps search engines show rich results (logo, contact).
-// Yantram is positioned as a software / product-development brand —
+// Yerni is positioned as a software / product-development brand —
 // distinct from the unrelated architectural-visualization "Yantram Studio".
 const ORG_JSON_LD = {
   "@context": "https://schema.org",
@@ -96,7 +96,7 @@ const ORG_JSON_LD = {
   url: SITE_URL,
   slogan: SITE_TAGLINE,
   description: SITE_DESCRIPTION,
-  logo: `${SITE_URL}/android-chrome-512x512.png`,
+  logo: `${SITE_URL}/images/logo/android-chrome-512x512.png`,
   email: CONTACT_EMAIL,
   telephone: CONTACT_PHONE_DISPLAY,
   makesOffer: [
